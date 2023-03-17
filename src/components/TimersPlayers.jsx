@@ -12,9 +12,7 @@ export const TimerGame = ({ initialTime, bankTime, players }) => {
   useEffect(() => {
     let interval = null;
 
-    console.log(players);
-
-    if (isStart && !isTurnFinished) {
+    if (isStart) {
       interval = setInterval(() => {
         if (seconds === 0) {
           setBankOfTime((prev) => prev - 1);
@@ -62,7 +60,7 @@ export const TimerGame = ({ initialTime, bankTime, players }) => {
   );
 };
 
-const Timers = ({ players, initialTime }) => {
+const TimerList = ({ players, initialTime }) => {
   return (
     <ul>
       {players?.map((player) => (
@@ -80,7 +78,7 @@ const Timers = ({ players, initialTime }) => {
 export const TimersPlayers = ({ players, initialTime }) => {
   const hasPlayers = players?.length > 0;
   return hasPlayers ? (
-    <Timers players={players} initialTime={initialTime} />
+    <TimerList players={players} initialTime={initialTime} />
   ) : (
     <p>Seleccioná el tiempo de juego</p>
   );

@@ -3,6 +3,7 @@ import "./App.css";
 import { Players } from "./components/Players";
 import { TimersPlayers, TimerGame } from "./components/TimersPlayers";
 import SelectColor from "./components/SelectColor";
+import Timer from "./components/Timer";
 
 function App() {
   const [players, setPlayers] = useState([]);
@@ -12,7 +13,7 @@ function App() {
   const timer = useRef();
   const timerBank = useRef();
   const nameInput = useRef();
-  let id = useRef(0);
+  let id = useRef(-1);
 
   const handleChangeColor = (color) => {
     setColor(color);
@@ -31,6 +32,7 @@ function App() {
         name: nameInput.current.value,
         color: color,
         timerBank: timerBank.current.value,
+        isActive: false
       },
     ]);
   };
@@ -65,7 +67,14 @@ function App() {
         </form>
       </div>
       <Players players={players} />
-      <TimersPlayers initialTime={time} players={players} />
+      {//<TimersPlayers initialTime={time} players={players} />
+      }
+      {
+        time ? 
+        <Timer initialTime={time} players={players} />
+        :
+        null
+      }
     </>
   );
 }
