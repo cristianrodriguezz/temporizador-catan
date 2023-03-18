@@ -1,29 +1,39 @@
 import React, { useEffect, useRef, useState } from "react";
+import { Players } from "./Players";
 
 const Timer = ({ initialTime, players }) => {
   const [timeGame, setTimeGame] = useState(initialTime);
   const [player, setPlayer] = useState(players);
-  let bankActualPlayer = useRef(player[0]?.timerBank);
-  const [bankPlayer, setBankPlayer] = useState(bankActualPlayer.current);
   const [isRun, setIsRun] = useState(false);
-  const idPlayer = useRef(player.length)
+  const idP = useRef(player.length - 1)
+  const [idPlayer,setIdPlayer] = useState(0)
 
+  const [bankActualPlayer, setBankActualPlayer] = useState(player[idPlayer]?.timerBank);
+  const [bankA, setBankA] = useState(bankActualPlayer)
+
+
+
+
+  //AL DAR LA VUELTA SE CAMBIA EL VALOR: bankActualPlayer DEL BANCO DE TIEMPO A UNDEFINED
   useEffect(() => {
     let interval = null;
-    console.log(player);
-    console.log(`Tiempo del banco: ${bankActualPlayer.current}`);
+
 
     interval = setInterval(() => {
       if (isRun) {
-        setTimeGame((prev) => prev - 1);
+        if (timeGame <= 0) {
+          setBankActualPlayer((prev) => prev - 1);
+        } else {
+          setTimeGame((prev) => prev - 1);
+        }
+        if (bankActualPlayer <= 0 && timeGame <= 0 ) {
+          hanldeClickNextTurn()
+        }
       }
-      if (timeGame <= 0) {
-        setBankPlayer((prev) => prev - 1)
-      }
-    }, 500);
+    }, 100);
 
     return () => clearInterval(interval);
-  }, [timeGame, isRun, idPlayer]);
+  }, [timeGame, isRun, idPlayer, bankActualPlayer, player, idP]);
 
   const handleClickStart = () => {
     setIsRun(!isRun);
@@ -33,19 +43,30 @@ const Timer = ({ initialTime, players }) => {
   };
   const hanldeClickNextTurn = () => {
     setTimeGame(initialTime);
-    setIsRun(true)
-    idPlayer.current === player.length ? idPlayer.current = 0 : idPlayer.current += 1
-    handleUpdatePlayer(idPlayer.current);
-    bankActualPlayer.current = player[idPlayer.current]?.timerBank
+    let id = idPlayer
+    //setIsRun(true);
+  
+
+      if (idP.current === idPlayer) {
+        setIdPlayer(0);
+        id = 0
+      }
+      else{
+        id = idPlayer + 1
+        setIdPlayer(idPlayer + 1)
+      }
+
+
+    setBankActualPlayer(player[id].timerBank);
+    updateBankPlayer(idPlayer, bankActualPlayer );
   };
 
-
-  const handleUpdatePlayer = (playerId) => {
+  const updateBankPlayer = (playerId, bankAP ) => {
     const newBankTimePlayer = player.map((player) => {
-      if (player.id === playerId) {
+      if (player.id=== (playerId)) {
         return {
           ...player,
-          timerBank: bankActualPlayer.current,
+          timerBank: bankAP,
         };
       }
       return player;
@@ -54,12 +75,14 @@ const Timer = ({ initialTime, players }) => {
   };
 
   return (
+    
     <div>
-      Tiempo de juego: {timeGame}. Tiempo del banco: {bankPlayer}
+      <Players players={player} />
+      Tiempo de juego: {timeGame}. Tiempo del banco: {bankActualPlayer}
       <button onClick={handleClickStart}>{isRun ? "Resume" : "Start"}</button>
       <button onClick={hanldeClickReset}>Reset</button>
       <button onClick={hanldeClickNextTurn}>Next turn</button>
-      {idPlayer.current}
+      idplayer: {idPlayer}  idP:{idP.current}
     </div>
   );
 };

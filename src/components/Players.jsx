@@ -1,6 +1,8 @@
-import React from "react" 
+import React, { useEffect } from "react" 
 
 const PlayersList = ({ players }) =>{
+  console.log();
+
     return(
       <ul>
         {
@@ -8,6 +10,7 @@ const PlayersList = ({ players }) =>{
             <li key={player.id} className="players">
               <div style={{background: player.color}}>
                 <p>{player.name}</p>
+                <p>{player.timerBank}</p>
               </div>
             </li>
           ))
@@ -24,6 +27,7 @@ const NotPlayers = () => {
 
 export const Players = ({ players }) => {
     const hasPlayers = players?.length > 0
+
     return(
         hasPlayers 
         ?

@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import "./App.css";
 import { Players } from "./components/Players";
 import { TimersPlayers, TimerGame } from "./components/TimersPlayers";
@@ -9,7 +9,8 @@ function App() {
   const [players, setPlayers] = useState([]);
   const [color, setColor] = useState();
   const [time, setTime] = useState();
-  const [next, setNext] = useState();
+  const [renderPlayer, setRenderPlayer] = useState(false)
+
   const timer = useRef();
   const timerBank = useRef();
   const nameInput = useRef();
@@ -18,9 +19,10 @@ function App() {
   const handleChangeColor = (color) => {
     setColor(color);
   };
-  const handleClick = (next) => {
-    setNext(next);
+  const handleClickStartGame = () => {
+    setRenderPlayer(true)
   };
+
 
   const handleSubmitPlayer = (e) => {
     e.preventDefault();
@@ -31,8 +33,8 @@ function App() {
         id: id.current,
         name: nameInput.current.value,
         color: color,
-        timerBank: timerBank.current.value,
-        isActive: false
+        timerBank: parseInt(timerBank.current.value),
+        isActive: false,
       },
     ]);
   };
@@ -53,6 +55,7 @@ function App() {
           </label>
           <button>Enter</button>
         </form>
+        {time ? <p>Time: {time}</p> : <p>Elija tiempo de juego</p>}
         <form onSubmit={handleSubmitPlayer}>
           <SelectColor color={handleChangeColor} />
           <label>
@@ -63,18 +66,15 @@ function App() {
             Time of bank
             <input type="number" ref={timerBank} />
           </label>
+          <p>Players: {players.length}</p>
           <button>Add</button>
         </form>
+        <button onClick={handleClickStartGame}>Start game</button>
       </div>
-      <Players players={players} />
-      {//<TimersPlayers initialTime={time} players={players} />
-      }
       {
-        time ? 
-        <Timer initialTime={time} players={players} />
-        :
-        null
+        renderPlayer ? <Timer initialTime={time} players={players}/> : null
       }
+
     </>
   );
 }
