@@ -11,7 +11,6 @@ const Timer = ({ initialTime, players }) => {
   const [idPlayer,setIdPlayer] = useState(0)
 
   const [bankActualPlayer, setBankActualPlayer] = useState(player[idPlayer]?.timerBank);
-  const [bankA, setBankA] = useState(bankActualPlayer)
 
 
 
@@ -44,10 +43,9 @@ const Timer = ({ initialTime, players }) => {
     setTimeGame(initialTime);
   };
   const hanldeClickNextTurn = () => {
-    console.log("--------------------------------------------");
     setTimeGame(initialTime);
     let id = idPlayer
-    //setIsRun(true);
+    // setIsRun(true);
   
     if (!isFirstTurn) {
       if (idP.current === idPlayer) {
@@ -69,15 +67,16 @@ const Timer = ({ initialTime, players }) => {
       } else {
         if (isComeback) {
           id = idPlayer - 1;
-          if(id === 0){
+          if(id === -1){
+            id = 0;
             setIsFirstTurn(false)
           }
         } else {
           id = idPlayer + 1;
         }
-
       }
     }
+
 
 
       console.log("setear Id Player . id ::" + id);
