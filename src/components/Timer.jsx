@@ -69,7 +69,8 @@ const Timer = ({ initialTime, players }) => {
       } else {
         if (isComeback) {
           id = idPlayer - 1;
-          if(id === 0){
+          if(id === -1){
+            id = 0
             setIsFirstTurn(false)
           }
         } else {
@@ -86,6 +87,16 @@ const Timer = ({ initialTime, players }) => {
     setBankActualPlayer(player[id].timerBank);
     updateBankPlayer(idPlayer, bankActualPlayer );
   };
+
+  const clockwise = () =>{
+    
+    return newId;
+  }
+
+  const counterclockwise = () =>{
+    
+    return newId;
+  }
 
   const updateBankPlayer = (playerId, bankAP ) => {
     const newBankTimePlayer = player.map((player) => {
