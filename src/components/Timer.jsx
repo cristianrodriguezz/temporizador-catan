@@ -9,7 +9,6 @@ const Timer = ({ initialTime, players }) => {
   const [isComeback, setIsComeback] = useState(false);
   const idP = useRef(player.length - 1)
   const [idPlayer,setIdPlayer] = useState(0)
-
   const [bankActualPlayer, setBankActualPlayer] = useState(player[idPlayer]?.timerBank);
 
 
