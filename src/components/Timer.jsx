@@ -12,7 +12,9 @@ const Timer = ({ initialTime, players }) => {
 
   const [bankActualPlayer, setBankActualPlayer] = useState(player[idPlayer]?.timerBank);
 
-
+  useEffect(() => {
+    setBankActualPlayer(player[idPlayer]?.timerBank);
+  }, [idPlayer, player]);
 
 
   //AL DAR LA VUELTA SE CAMBIA EL VALOR: bankActualPlayer DEL BANCO DE TIEMPO A UNDEFINED
