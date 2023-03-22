@@ -5,16 +5,16 @@ const Timer = ({ initialTime, players }) => {
   const [timeGame, setTimeGame] = useState(initialTime);
   const [player, setPlayer] = useState(players);
   const [isRun, setIsRun] = useState(false);
+  const [isFirstTurn, setIsFirstTurn] = useState(true);
+  const [isComeback, setIsComeback] = useState(false);
   const idP = useRef(player.length - 1)
   const [idPlayer,setIdPlayer] = useState(0)
-
   const [bankActualPlayer, setBankActualPlayer] = useState(player[idPlayer]?.timerBank);
-  const [bankA, setBankA] = useState(bankActualPlayer)
 
+  useEffect(() => {
+    setBankActualPlayer(player[idPlayer]?.timerBank);
+  }, [idPlayer, player]);
 
-
-
-  //AL DAR LA VUELTA SE CAMBIA EL VALOR: bankActualPlayer DEL BANCO DE TIEMPO A UNDEFINED
   useEffect(() => {
     let interval = null;
 
@@ -44,19 +44,39 @@ const Timer = ({ initialTime, players }) => {
   const hanldeClickNextTurn = () => {
     setTimeGame(initialTime);
     let id = idPlayer
-    //setIsRun(true);
+    // setIsRun(true);
   
-
+    if (!isFirstTurn) {
       if (idP.current === idPlayer) {
-        setIdPlayer(0);
-        id = 0
+        id = 0;
+      } 
+      else {
+        id = idPlayer + 1;
       }
-      else{
-        id = idPlayer + 1
-        setIdPlayer(idPlayer + 1)
+    } 
+    else
+    {
+      console.log("isFirstTurn ::" + isFirstTurn);
+      if (idP.current === idPlayer && !isComeback) {
+        if (!isComeback) {
+          console.log("isComeback ::" + isComeback);
+          id = idPlayer;
+          setIsComeback(true);
+        }
+      } else {
+        if (isComeback) {
+          id = idPlayer - 1;
+          if(id === -1){
+            id = 0;
+            setIsFirstTurn(false)
+          }
+        } else {
+          id = idPlayer + 1;
+        }
       }
+    }
 
-
+    setIdPlayer(id);
     setBankActualPlayer(player[id].timerBank);
     updateBankPlayer(idPlayer, bankActualPlayer );
   };
