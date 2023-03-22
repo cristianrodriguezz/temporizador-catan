@@ -1,10 +1,10 @@
-import React, { useEffect } from "react" 
+import React from "react" 
 
 const PlayersList = ({ players }) =>{
-  console.log();
+
 
     return(
-      <ul>
+      <ul className="timerListPlayer">
         {
           players?.map( player =>(
             <li key={player.id} className="players">

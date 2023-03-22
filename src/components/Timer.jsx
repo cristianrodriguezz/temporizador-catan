@@ -7,17 +7,15 @@ const Timer = ({ initialTime, players }) => {
   const [isRun, setIsRun] = useState(false);
   const [isFirstTurn, setIsFirstTurn] = useState(true);
   const [isComeback, setIsComeback] = useState(false);
-  const idP = useRef(player.length - 1)
-  const [idPlayer,setIdPlayer] = useState(0)
-  const [bankActualPlayer, setBankActualPlayer] = useState(player[idPlayer]?.timerBank);
-
-
-
+  const idP = useRef(player?.length - 1);
+  const [idPlayer, setIdPlayer] = useState(0);
+  const [bankActualPlayer, setBankActualPlayer] = useState(
+    player[idPlayer]?.timerBank
+  );
 
   //AL DAR LA VUELTA SE CAMBIA EL VALOR: bankActualPlayer DEL BANCO DE TIEMPO A UNDEFINED
   useEffect(() => {
     let interval = null;
-
 
     interval = setInterval(() => {
       if (isRun) {
@@ -26,8 +24,8 @@ const Timer = ({ initialTime, players }) => {
         } else {
           setTimeGame((prev) => prev - 1);
         }
-        if (bankActualPlayer <= 0 && timeGame <= 0 ) {
-          hanldeClickNextTurn()
+        if (bankActualPlayer <= 0 && timeGame <= 0) {
+          hanldeClickNextTurn();
         }
       }
     }, 100);
@@ -43,19 +41,16 @@ const Timer = ({ initialTime, players }) => {
   };
   const hanldeClickNextTurn = () => {
     setTimeGame(initialTime);
-    let id = idPlayer
-    // setIsRun(true);
-  
+    let id = idPlayer;
+    setIsRun(true);
+
     if (!isFirstTurn) {
       if (idP.current === idPlayer) {
         id = 0;
-      } 
-      else {
+      } else {
         id = idPlayer + 1;
       }
-    } 
-    else
-    {
+    } else {
       console.log("isFirstTurn ::" + isFirstTurn);
       if (idP.current === idPlayer && !isComeback) {
         if (!isComeback) {
@@ -66,9 +61,9 @@ const Timer = ({ initialTime, players }) => {
       } else {
         if (isComeback) {
           id = idPlayer - 1;
-          if(id === -1){
+          if (id === -1) {
             id = 0;
-            setIsFirstTurn(false)
+            setIsFirstTurn(false);
           }
         } else {
           id = idPlayer + 1;
@@ -76,28 +71,24 @@ const Timer = ({ initialTime, players }) => {
       }
     }
 
-
-
-      console.log("setear Id Player . id ::" + id);
-      setIdPlayer(id);
+    console.log("setear Id Player . id ::" + id);
+    setIdPlayer(id);
 
     setBankActualPlayer(player[id].timerBank);
-    updateBankPlayer(idPlayer, bankActualPlayer );
+    updateBankPlayer(idPlayer, bankActualPlayer);
   };
 
-  const clockwise = () =>{
-    
+  const clockwise = () => {
     return newId;
-  }
+  };
 
-  const counterclockwise = () =>{
-    
+  const counterclockwise = () => {
     return newId;
-  }
+  };
 
-  const updateBankPlayer = (playerId, bankAP ) => {
+  const updateBankPlayer = (playerId, bankAP) => {
     const newBankTimePlayer = player.map((player) => {
-      if (player.id=== (playerId)) {
+      if (player.id === playerId) {
         return {
           ...player,
           timerBank: bankAP,
@@ -109,14 +100,15 @@ const Timer = ({ initialTime, players }) => {
   };
 
   return (
-    
     <div>
-      <Players players={player} />
-      Tiempo de juego: {timeGame}. Tiempo del banco: {bankActualPlayer}
-      <button onClick={handleClickStart}>{isRun ? "Resume" : "Start"}</button>
-      <button onClick={hanldeClickReset}>Reset</button>
-      <button onClick={hanldeClickNextTurn}>Next turn</button>
-      idplayer: {idPlayer}  idP:{idP.current}
+      <button className="game" onClick={hanldeClickNextTurn}>
+        <Players players={player} />
+        Tiempo de juego: {timeGame}. Tiempo del banco: {bankActualPlayer}
+      </button>
+      <div className="buttonsGame">
+        <button onClick={handleClickStart}>{isRun ? "Resume" : "Start"}</button>
+        <button onClick={hanldeClickReset}>Reset</button>
+      </div>
     </div>
   );
 };

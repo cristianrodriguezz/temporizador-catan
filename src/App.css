@@ -1,3 +1,6 @@
+p{
+  margin: 0;
+}
 .timerPlayer{
   width: 200px;
   background-color: rgb(18, 31, 43);
@@ -10,6 +13,16 @@
 }
 .timerListPlayer{
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(200px,1fr));
-  gap: 1.5rem
+  padding: 0;
+  list-style: none;
+  grid-template-columns: repeat(auto-fill, minmax(130px,1fr));
+  gap: 0.8rem
+}
+.game{
+  width: 100%;
+}
+.buttonsGame{
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
 }
