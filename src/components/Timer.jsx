@@ -12,10 +12,14 @@ const Timer = ({ initialTime, players }) => {
   const [bankActualPlayer, setBankActualPlayer] = useState(player[idPlayer]?.timerBank);
 
   useEffect(() => {
-    let interval = null;
-    
+
     setBankActualPlayer(player[idPlayer]?.timerBank)
 
+  }, [idPlayer, player])
+  
+
+  useEffect(() => {
+    let interval = null;
 
     interval = setInterval(() => {
       if (isRun) {
