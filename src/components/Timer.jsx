@@ -9,15 +9,12 @@ const Timer = ({ initialTime, players }) => {
   const [isComeback, setIsComeback] = useState(false);
   const idP = useRef(player.length - 1)
   const [idPlayer,setIdPlayer] = useState(0)
-
   const [bankActualPlayer, setBankActualPlayer] = useState(player[idPlayer]?.timerBank);
 
   useEffect(() => {
     setBankActualPlayer(player[idPlayer]?.timerBank);
   }, [idPlayer, player]);
 
-
-  //AL DAR LA VUELTA SE CAMBIA EL VALOR: bankActualPlayer DEL BANCO DE TIEMPO A UNDEFINED
   useEffect(() => {
     let interval = null;
 
@@ -79,24 +76,10 @@ const Timer = ({ initialTime, players }) => {
       }
     }
 
-
-
-      console.log("setear Id Player . id ::" + id);
-      setIdPlayer(id);
-
+    setIdPlayer(id);
     setBankActualPlayer(player[id].timerBank);
     updateBankPlayer(idPlayer, bankActualPlayer );
   };
-
-  const clockwise = () =>{
-    
-    return newId;
-  }
-
-  const counterclockwise = () =>{
-    
-    return newId;
-  }
 
   const updateBankPlayer = (playerId, bankAP ) => {
     const newBankTimePlayer = player.map((player) => {
