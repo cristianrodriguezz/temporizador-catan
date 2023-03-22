@@ -20,8 +20,6 @@ const Timer = ({ initialTime, players }) => {
   useEffect(() => {
     let interval = null;
 
-    setBankActualPlayer(player[idPlayer]?.timerBank);
-
     interval = setInterval(() => {
       if (isRun) {
         if (timeGame <= 0) {
