@@ -66,7 +66,7 @@ function App() {
         </label>
         <label>
           Tiempo del banco
-          <input type="number" ref={timerBank} />
+          <input type="number" step={15} ref={timerBank} />
         </label>
         <p>Jugadores: {players.length}</p>
         <button>Agregar</button>

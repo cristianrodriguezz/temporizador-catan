@@ -54,7 +54,6 @@ const Timer = ({ initialTime, players }) => {
         id = idPlayer + 1;
       }
     } else {
-      console.log("isFirstTurn ::" + isFirstTurn);
       if (idP.current === idPlayer && !isComeback) {
         if (!isComeback) {
           console.log("isComeback ::" + isComeback);

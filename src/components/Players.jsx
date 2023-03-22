@@ -8,9 +8,9 @@ const PlayersList = ({ players }) =>{
         {
           players?.map( player =>(
             <li key={player.id} className="players">
-              <div style={{background: player.color}}>
-                <p>{player.name}</p>
+              <div style={{background: player.color}} className='player'>
                 <p>{player.timerBank}</p>
+                <p>{player.name}</p>
               </div>
             </li>
           ))
