@@ -7,15 +7,18 @@ const Timer = ({ initialTime, players }) => {
   const [isRun, setIsRun] = useState(false);
   const [isFirstTurn, setIsFirstTurn] = useState(true);
   const [isComeback, setIsComeback] = useState(false);
-  const idP = useRef(player?.length - 1);
-  const [idPlayer, setIdPlayer] = useState(0);
-  const [bankActualPlayer, setBankActualPlayer] = useState(
-    player[idPlayer]?.timerBank
-  );
+  const idP = useRef(player.length - 1)
+  const [idPlayer,setIdPlayer] = useState(0)
+  const [bankActualPlayer, setBankActualPlayer] = useState(player[idPlayer]?.timerBank);
 
-  //AL DAR LA VUELTA SE CAMBIA EL VALOR: bankActualPlayer DEL BANCO DE TIEMPO A UNDEFINED
+  useEffect(() => {
+  setBankActualPlayer(player[idPlayer]?.timerBank);
+
   useEffect(() => {
     let interval = null;
+
+      setBankActualPlayer(player[idPlayer]?.timerBank);
+    }, [idPlayer, player]);
 
     interval = setInterval(() => {
       if (isRun) {
@@ -71,22 +74,12 @@ const Timer = ({ initialTime, players }) => {
       }
     }
 
-    console.log("setear Id Player . id ::" + id);
     setIdPlayer(id);
-
     setBankActualPlayer(player[id].timerBank);
     updateBankPlayer(idPlayer, bankActualPlayer);
   };
 
-  const clockwise = () => {
-    return newId;
-  };
-
-  const counterclockwise = () => {
-    return newId;
-  };
-
-  const updateBankPlayer = (playerId, bankAP) => {
+  const updateBankPlayer = (playerId, bankAP ) => {
     const newBankTimePlayer = player.map((player) => {
       if (player.id === playerId) {
         return {
