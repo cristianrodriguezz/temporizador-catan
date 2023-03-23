@@ -44,9 +44,12 @@ const Timer = ({ initialTime, players }) => {
     setTimeGame(initialTime);
   };
   const hanldeClickNextTurn = () => {
+    if (!isRun) {
+      setIsRun(true);
+      return
+    }
     setTimeGame(initialTime);
     let id = idPlayer;
-    setIsRun(true);
 
     if (!isFirstTurn) {
       if (idP.current === idPlayer) {
