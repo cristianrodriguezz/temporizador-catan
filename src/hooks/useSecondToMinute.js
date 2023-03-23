@@ -6,3 +6,6 @@ export const useSecondsToString = (bankOfTime) => {
     let time = minute + ':' + second
     return time
 }
+export const useMinuteToSecond = (minutes, seconds) => {
+    return minutes * 60 + seconds
+}
