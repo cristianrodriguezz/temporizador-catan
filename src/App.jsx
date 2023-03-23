@@ -14,9 +14,6 @@ function App() {
   const secondsGame = useRef();
   const minute = useRef();
   const second = useRef();
-
-  const timer = useRef();
-
   const nameInput = useRef();
   let id = useRef(-1);
 
@@ -26,13 +23,17 @@ function App() {
   const handleClickStartGame = () => {
     setRenderPlayer(true);
   };
+  const handleChangeTime = (e) => {
+    setTime(e.target.value)
+  }
 
   const handleAddPlayer = (e) => {
     e.preventDefault();
     ++id.current;
-    const minutes = parseInt(minute.current.value)
-    const seconds = parseInt(second.current.value)
+    const minutes = minute.current.value === '' ? 0 : parseInt(minute.current.value)
+    const seconds = second.current.value === '' ? 0 : parseInt(second.current.value)
     const timeBank = useMinuteToSecond(minutes,seconds)
+    console.log(timeBank);
     setPlayers([
       ...players,
       {
@@ -47,9 +48,12 @@ function App() {
  
   const handleSubmitTime = (e) => {
     e.preventDefault();
-    const minute = parseInt(minutesGame.current.value)
-    const second = parseInt(secondsGame.current.value)
-    setTime(useMinuteToSecond(minute,second));
+    console.log(minutesGame.current.value);
+
+    const minutes = minutesGame.current.value === '' ? 0 : parseInt(minutesGame.current.value)
+    const seconds = secondsGame.current.value === '' ? 0 : parseInt(secondsGame.current.value)
+
+    setTime(useMinuteToSecond(minutes,seconds));
   };
 
   return renderPlayer ? (
@@ -60,9 +64,10 @@ function App() {
       <form onSubmit={handleSubmitTime}>
         <label>
           Tiempo de juego
-          <label for="minutesGame">
+          <label htmlFor="minutesGame">
             Minutos:
             <input
+            onChange={handleChangeTime}
               type="number"
               id="minutesGame"
               name="minutesGame"
@@ -72,7 +77,7 @@ function App() {
             ></input>
           </label>
           <span>:</span>
-          <label for="secondsGame">
+          <label htmlFor="secondsGame">
             Segundos:
             <input
               ref={secondsGame}
@@ -94,7 +99,7 @@ function App() {
         </label>
         <label>
           Tiempo del banco
-          <label for="minutes">
+          <label htmlFor="minutes">
             Minutos:
             <input
               type="number"
@@ -106,7 +111,7 @@ function App() {
             ></input>
           </label>
           <span>:</span>
-          <label for="seconds">
+          <label htmlFor="seconds">
             Segundos:
             <input
               ref={second}

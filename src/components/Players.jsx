@@ -1,4 +1,5 @@
-import React from "react" 
+import React, { useState } from "react" 
+import { useSecondsToString } from "../hooks/useSecondToMinute"
 
 const PlayersList = ({ players }) =>{
 
@@ -10,7 +11,7 @@ const PlayersList = ({ players }) =>{
             <li key={player.id} className="players">
               <div style={{background: player.color}}>
                 <p>{player.name}</p>
-                <p>{player.timerBank}</p>
+                <p>{useSecondsToString(player.timerBank)}</p>
               </div>
             </li>
           ))

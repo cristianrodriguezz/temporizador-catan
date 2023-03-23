@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import { Players } from "./Players";
+import { useSecondsToString } from "../hooks/useSecondToMinute";
 
 const Timer = ({ initialTime, players }) => {
   const [timeGame, setTimeGame] = useState(initialTime);
@@ -10,6 +11,8 @@ const Timer = ({ initialTime, players }) => {
   const idP = useRef(player.length - 1)
   const [idPlayer,setIdPlayer] = useState(0)
   const [bankActualPlayer, setBankActualPlayer] = useState(player[idPlayer]?.timerBank);
+  const [timeGameToMinute, setTimeGameToMinute] = useState(useSecondsToString(timeGame))
+  const [timeBankToMinute, setTimeBankToMinute] = useState(useSecondsToString(bankActualPlayer))
 
   useEffect(() => {
 
@@ -25,8 +28,10 @@ const Timer = ({ initialTime, players }) => {
       if (isRun) {
         if (timeGame <= 0) {
           setBankActualPlayer((prev) => prev - 1);
+          setTimeBankToMinute(useSecondsToString(bankActualPlayer))
         } else {
           setTimeGame((prev) => prev - 1);
+          setTimeGameToMinute(useSecondsToString(timeGame))
         }
         if (bankActualPlayer <= 0 && timeGame <= 0) {
           hanldeClickNextTurn();
@@ -35,7 +40,7 @@ const Timer = ({ initialTime, players }) => {
     }, 100);
 
     return () => clearInterval(interval);
-  }, [timeGame, isRun, idPlayer, bankActualPlayer, player, idP]);
+  }, [timeGame, isRun, idPlayer, bankActualPlayer, player, idP, timeGameToMinute]);
 
   const handleClickStart = () => {
     setIsRun(!isRun);
@@ -96,8 +101,8 @@ const Timer = ({ initialTime, players }) => {
   return (
     <div>
       <button className="game" onClick={hanldeClickNextTurn}>
-        <Players players={player} />
-        Tiempo de juego: {timeGame}. Tiempo del banco: {bankActualPlayer}
+        <Players players={player} timeBankToMinute={timeBankToMinute} />
+        Tiempo de juego: {timeGameToMinute}. Tiempo del banco: {timeBankToMinute}
       </button>
       <div className="buttonsGame">
         <button onClick={handleClickStart}>{isRun ? "Resume" : "Start"}</button>
