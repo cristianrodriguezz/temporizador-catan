@@ -42,7 +42,7 @@ const Timer = ({ initialTime, players }) => {
           hanldeClickNextTurn();
         }
       }
-    }, 100);
+    }, 1000);
     
     return () => clearInterval(interval);
   }, [timeGame, isRun, idPlayer, bankActualPlayer, player, idP, timeGameToMinute, timeBankToMinute]);
@@ -52,6 +52,7 @@ const Timer = ({ initialTime, players }) => {
   };
   const hanldeClickReset = () => {
     setTimeGame(initialTime);
+    setIsRun(true);
   };
   const hanldeClickNextTurn = () => {
     if (!isRun) {
@@ -108,7 +109,11 @@ const Timer = ({ initialTime, players }) => {
   return (
     <div>
       <button className="game" onClick={hanldeClickNextTurn}>
-        Tiempo de juego: <span>{timeGameToMinute}</span> Tiempo del banco: <span>{timeBankToMinute}</span>
+        <div style={{ backgroundColor: player[idPlayer].color }}>
+          <span style={timeGame > 0 ? { fontSize : "30vw", fontFamily: "'Inconsolata', monospace", fontWeight: 900, transition: "font-size 0.15s ease-in-out"}: { fontSize : "20vw", fontFamily: "'Inconsolata', monospace", fontWeight: 900, transition: "font-size 1s ease-in-out"}}>{timeGameToMinute}</span> 
+          <br />
+          <span style={timeGame > 0 ? { fontSize : "20vw", fontFamily: "'Inconsolata', monospace", fontWeight: 900, transition: "font-size 0.15s ease-in-out"}: { fontSize : "30vw", fontFamily: "'Inconsolata', monospace", fontWeight: 900, transition: "font-size 1s ease-in-out"}}>{timeBankToMinute}</span>
+        </div>
         <Players players={player} timeBankToMinute={timeBankToMinute} />
       </button>
       <div className="buttonsGame">
