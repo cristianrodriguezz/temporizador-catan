@@ -51,8 +51,8 @@ const Timer = ({ initialTime, players }) => {
     setIsRun(!isRun);
   };
   const hanldeClickReset = () => {
-    setIsRun(true);
     setTimeGame(initialTime);
+    setIsRun(true);
   };
   const hanldeClickNextTurn = () => {
     if (!isRun) {
@@ -110,9 +110,9 @@ const Timer = ({ initialTime, players }) => {
     <div>
       <button className="game" onClick={hanldeClickNextTurn}>
         <div style={{ backgroundColor: player[idPlayer].color }}>
-          <span style={{ fontSize : "175px"}}>{timeGameToMinute}</span> 
+          <span style={{ fontSize : "175px", fontFamily: "'Inconsolata', monospace", fontWeight: 900}}>{timeGameToMinute}</span> 
           <br />
-          <span style={{ fontSize : "60px"}}>{timeBankToMinute}</span>
+          <span style={{ fontSize : "60px", fontFamily: "'Inconsolata', monospace", fontWeight: 900}}>{timeBankToMinute}</span>
         </div>
         <Players players={player} timeBankToMinute={timeBankToMinute} />
       </button>
