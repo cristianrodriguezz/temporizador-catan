@@ -8,6 +8,7 @@ const Timer = ({ initialTime, players }) => {
   const [isRun, setIsRun] = useState(false);
   const [isFirstTurn, setIsFirstTurn] = useState(true);
   const [isComeback, setIsComeback] = useState(false);
+
   const idP = useRef(player.length - 1)
   const [idPlayer,setIdPlayer] = useState(0)
   const [bankActualPlayer, setBankActualPlayer] = useState(player[idPlayer]?.timerBank);
@@ -23,6 +24,7 @@ const Timer = ({ initialTime, players }) => {
 
   }, [idPlayer, player])
   
+
 
   useEffect(() => {
     let interval = null;
@@ -90,7 +92,7 @@ const Timer = ({ initialTime, players }) => {
     updateBankPlayer(idPlayer, bankActualPlayer);
   };
 
-  const updateBankPlayer = (playerId, bankAP ) => {
+  const updateBankPlayer = (playerId, bankAP) => {
     const newBankTimePlayer = player.map((player) => {
       if (player.id === playerId) {
         return {
