@@ -1,5 +1,5 @@
 import "./App.css";
-import React from "react";
+import React, { useEffect } from "react";
 import { useState, useRef } from "react";
 import SelectColor from "./components/SelectColor";
 import Timer from "./components/Timer";
@@ -10,8 +10,9 @@ function App() {
   const [color, setColor] = useState();
   const [time, setTime] = useState();
   const [renderPlayer, setRenderPlayer] = useState(false);
-  const minutesGame = useRef();
-  const secondsGame = useRef();
+  const [minutesGame, setMinutesGame] = useState(0);
+  const [secondsGame, setSecondsGame] = useState(0);
+  const [deleteColor, setDeleteColor] = useState(false);
   const minute = useRef();
   const second = useRef();
   const nameInput = useRef();
@@ -23,17 +24,29 @@ function App() {
   const handleClickStartGame = () => {
     setRenderPlayer(true);
   };
-  const handleChangeTime = (e) => {
-    setTime(e.target.value)
-  }
+  const handleChangeTimeSecond = (e) => {
+    const sec = e.target.value;
+    console.log(sec);
+    setSecondsGame(sec);
+  };
+  const handleChangeTimeMinute = (e) => {
+    const min = e.target.value;
+    console.log(min);
+    setMinutesGame(min);
+  };
+
+  useEffect(() => {
+    setTime(useMinuteToSecond(minutesGame, secondsGame));
+  }, [minutesGame, secondsGame]);
 
   const handleAddPlayer = (e) => {
     e.preventDefault();
     ++id.current;
-    const minutes = minute.current.value === '' ? 0 : parseInt(minute.current.value)
-    const seconds = second.current.value === '' ? 0 : parseInt(second.current.value)
-    const timeBank = useMinuteToSecond(minutes,seconds)
-    console.log(timeBank);
+    const minutes =
+      minute.current.value === "" ? 0 : parseInt(minute.current.value);
+    const seconds =
+      second.current.value === "" ? 0 : parseInt(second.current.value);
+    const timeBank = useMinuteToSecond(minutes, seconds);
     setPlayers([
       ...players,
       {
@@ -44,63 +57,52 @@ function App() {
         isActive: false,
       },
     ]);
-  };
- 
-  const handleSubmitTime = (e) => {
-    e.preventDefault();
-    console.log(minutesGame.current.value);
-
-    const minutes = minutesGame.current.value === '' ? 0 : parseInt(minutesGame.current.value)
-    const seconds = secondsGame.current.value === '' ? 0 : parseInt(secondsGame.current.value)
-
-    setTime(useMinuteToSecond(minutes,seconds));
+    setDeleteColor(!deleteColor);
   };
 
   return renderPlayer ? (
     <Timer initialTime={time} players={players} />
   ) : (
     <div className="App">
-      <h1>Temporizador para juegos de mesa</h1>
-      <form onSubmit={handleSubmitTime}>
-        <label>
-          Tiempo de juego
-          <label htmlFor="minutesGame">
-            Minutos:
+      <h1>Temporizador</h1>
+      <form className="containerTimeGame">
+        <h2>Tiempo por turno: </h2>
+        <div className="containerMinutesGame">
+          <label htmlFor="minutesGame" className="minutesGame">
             <input
-            onChange={handleChangeTime}
+              onChange={handleChangeTimeMinute}
               type="number"
               id="minutesGame"
               name="minutesGame"
               min="0"
               max="59"
-              ref={minutesGame}
+              className="inputTimeGame"
             ></input>
           </label>
           <span>:</span>
-          <label htmlFor="secondsGame">
-            Segundos:
+          <label htmlFor="secondsGame" className="minutesGame">
             <input
-              ref={secondsGame}
+              onChange={handleChangeTimeSecond}
               type="number"
               id="secondsGame"
               name="secondsGame"
               min="0"
               max="59"
+              className="inputTimeGame"
             ></input>
           </label>
-        </label>
-        <button>Enter</button>
+        </div>
       </form>
-      <form onSubmit={handleAddPlayer}>
-        <SelectColor color={handleChangeColor} />
+      <form  onSubmit={handleAddPlayer}>
+        <h2>Jugador: </h2> 
+        <SelectColor color={handleChangeColor} deleteColor={deleteColor} />
         <label>
-          Jugador
+          Nombre
           <input type="text" id="name" ref={nameInput} />
         </label>
-        <label>
-          Tiempo del banco
+        <div className="containerMinutesGame">
+          Tiempo de banco del jugador
           <label htmlFor="minutes">
-            Minutos:
             <input
               type="number"
               id="minutes"
@@ -112,7 +114,6 @@ function App() {
           </label>
           <span>:</span>
           <label htmlFor="seconds">
-            Segundos:
             <input
               ref={second}
               type="number"
@@ -122,8 +123,10 @@ function App() {
               max="59"
             ></input>
           </label>
-        </label>
-        <p>Jugadores: {players.length}</p>
+        </div>
+        <p>
+          Jugadores: <span>{players.length}</span>
+        </p>
         <button>Agregar</button>
       </form>
       <button onClick={handleClickStartGame}>Empezar juego</button>

@@ -1,33 +1,43 @@
-import React, { useRef } from "react";
-import { colors } from "../constants/colors.js";
+import React, { useEffect, useRef, useState } from "react";
 
-const SelectColor = ( {color} ) => {
+const SelectColor = ({ color, deleteColor }) => {
+  const [options, setOptions] = useState([
+    { id: 1, value: "red", label: "Red" },
+    { id: 2, value: "green", label: "Green" },
+    { id: 3, value: "blue", label: "Blue" },
+    { id: 4, value: "#ffffff87", label: "White" },
+    { id: 5, value: "orange", label: "Orange" },
+    { id: 6, value: "#78270e", label: "Brown" },
+  ]);
+  const [optionSelected, setOptionSelected] = useState();
   const colorInput = useRef();
 
-  const handleChange = () => {
-    color(colorInput.current.value)
-  }
+  useEffect(() => {
+    const updatedOptions = options.filter(
+      (option) => option.value !== optionSelected
+    );
+    setOptions(updatedOptions);
+  }, [deleteColor]);
+
+  const handleSelectChange = (e) => {
+    const selectColor = e.target.value;
+    setOptionSelected(selectColor);
+    color(selectColor);
+  };
 
   return (
-    <label>
-      <select
-        name="select"
-        id="color"
-        defaultValue={"DEFAULT"}
-        ref={colorInput}
-        onChange={handleChange}
-      >
-        <option hidden value="DEFAULT">
-          Select color
+    <select defaultValue={"DEFAULT"} ref={colorInput} onChange={handleSelectChange}>
+      <option value={"DEFAULT"}>Select color</option>
+      {options.map((option) => (
+        <option
+          style={{ backgroundColor: option.value }}
+          key={option.id}
+          value={option.value}
+        >
+          {option.label}
         </option>
-        <option value={colors.red}>Red</option>
-        <option value={colors.blue}>Blue</option>
-        <option value={colors.white}>White</option>
-        <option value={colors.orange}>Orange</option>
-        <option value={colors.green}>Green</option>
-        <option value={colors.brown}>Brown</option>
-      </select>
-    </label>
+      ))}
+    </select>
   );
 };
 

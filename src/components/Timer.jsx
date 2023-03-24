@@ -14,6 +14,8 @@ const Timer = ({ initialTime, players }) => {
   const [timeGameToMinute, setTimeGameToMinute] = useState(useSecondsToString(timeGame))
   const [timeBankToMinute, setTimeBankToMinute] = useState(useSecondsToString(bankActualPlayer))
 
+  console.log(timeBankToMinute);
+
   useEffect(() => {
 
     setBankActualPlayer(player[idPlayer]?.timerBank)
@@ -31,16 +33,16 @@ const Timer = ({ initialTime, players }) => {
           setTimeBankToMinute(useSecondsToString(bankActualPlayer))
         } else {
           setTimeGame((prev) => prev - 1);
-          setTimeGameToMinute(useSecondsToString(timeGame))
+          setTimeGameToMinute(useSecondsToString(timeGame - 1))
         }
         if (bankActualPlayer <= 0 && timeGame <= 0) {
           hanldeClickNextTurn();
         }
       }
     }, 100);
-
+    
     return () => clearInterval(interval);
-  }, [timeGame, isRun, idPlayer, bankActualPlayer, player, idP, timeGameToMinute]);
+  }, [timeGame, isRun, idPlayer, bankActualPlayer, player, idP, timeGameToMinute, timeBankToMinute]);
 
   const handleClickStart = () => {
     setIsRun(!isRun);
@@ -82,9 +84,9 @@ const Timer = ({ initialTime, players }) => {
         }
       }
     }
-
     setIdPlayer(id);
     setBankActualPlayer(player[id].timerBank);
+    setTimeBankToMinute(useSecondsToString(bankActualPlayer))
     updateBankPlayer(idPlayer, bankActualPlayer);
   };
 
@@ -100,12 +102,13 @@ const Timer = ({ initialTime, players }) => {
     });
     setPlayer(newBankTimePlayer);
   };
+  console.log(timeGameToMinute);
 
   return (
     <div>
       <button className="game" onClick={hanldeClickNextTurn}>
         <Players players={player} timeBankToMinute={timeBankToMinute} />
-        Tiempo de juego: {timeGameToMinute}. Tiempo del banco: {timeBankToMinute}
+        Tiempo de juego: <span>{timeGameToMinute}</span> Tiempo del banco: <span>{timeBankToMinute}</span>
       </button>
       <div className="buttonsGame">
         <button onClick={handleClickStart}>{isRun ? "Resume" : "Start"}</button>
