@@ -51,6 +51,7 @@ const Timer = ({ initialTime, players }) => {
     setIsRun(!isRun);
   };
   const hanldeClickReset = () => {
+    setIsRun(true);
     setTimeGame(initialTime);
   };
   const hanldeClickNextTurn = () => {
