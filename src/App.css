@@ -1,10 +1,37 @@
-p{
-  margin: 0;
-}
+
 .timerPlayer{
   width: 200px;
   background-color: rgb(18, 31, 43);
   border-radius: 10px;
+}
+h1{
+  text-align: center;
+}
+select{
+  max-width: 40%;
+  min-height: 3rem;
+  text-align: center;
+  font-size:1rem;
+}
+.containerMinutesGame{
+  display: flex;
+  align-items: center;
+}
+.containerAddPlayer{
+  display: flex;
+  flex-direction: column;
+}
+.containerTimeGame{
+  display: flex;
+  gap: 5px;
+}
+.containerMinutesGame input{
+  min-width: 4rem;
+  min-height: 2rem;
+}
+.minutesGame{
+  display: flex;
+  flex-direction: column;
 }
 .timerPlayer h1{
   text-align: center;
@@ -26,3 +53,21 @@ p{
   justify-content: space-around;
   align-items: center;
 }
+.containerPlayers{
+  display: flex;
+  flex-direction: column;
+  height: 79vh;
+  justify-content: space-between;
+}
+input#name{
+  width: 100%;
+}
+.player{
+  display: flex;
+  flex-direction: column;
+
+}
+.player span, p{
+  text-align: center;
+}
+

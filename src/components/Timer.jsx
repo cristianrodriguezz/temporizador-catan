@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import { Players } from "./Players";
+import { useSecondsToString } from "../hooks/useSecondToMinute";
 
 const Timer = ({ initialTime, players }) => {
   const [timeGame, setTimeGame] = useState(initialTime);
@@ -7,15 +8,23 @@ const Timer = ({ initialTime, players }) => {
   const [isRun, setIsRun] = useState(false);
   const [isFirstTurn, setIsFirstTurn] = useState(true);
   const [isComeback, setIsComeback] = useState(false);
-  const idP = useRef(player.length - 1);
-  const [idPlayer, setIdPlayer] = useState(0);
-  const [bankActualPlayer, setBankActualPlayer] = useState(
-    player[idPlayer]?.timerBank
-  );
+
+  const idP = useRef(player.length - 1)
+  const [idPlayer,setIdPlayer] = useState(0)
+  const [bankActualPlayer, setBankActualPlayer] = useState(player[idPlayer]?.timerBank);
+  const [timeGameToMinute, setTimeGameToMinute] = useState(useSecondsToString(timeGame))
+  const [timeBankToMinute, setTimeBankToMinute] = useState(useSecondsToString(bankActualPlayer))
+
+
 
   useEffect(() => {
-    setBankActualPlayer(player[idPlayer]?.timerBank);
-  }, [player, idPlayer]);
+
+    setBankActualPlayer(player[idPlayer]?.timerBank)
+    setTimeBankToMinute(useSecondsToString(bankActualPlayer))
+
+  }, [idPlayer, player])
+  
+
 
   useEffect(() => {
     let interval = null;
@@ -24,17 +33,19 @@ const Timer = ({ initialTime, players }) => {
       if (isRun) {
         if (timeGame <= 0) {
           setBankActualPlayer((prev) => prev - 1);
+          setTimeBankToMinute(useSecondsToString(bankActualPlayer))
         } else {
           setTimeGame((prev) => prev - 1);
+          setTimeGameToMinute(useSecondsToString(timeGame - 1))
         }
         if (bankActualPlayer <= 0 && timeGame <= 0) {
           hanldeClickNextTurn();
         }
       }
     }, 100);
-
+    
     return () => clearInterval(interval);
-  }, [timeGame, isRun, idPlayer, bankActualPlayer, player, idP]);
+  }, [timeGame, isRun, idPlayer, bankActualPlayer, player, idP, timeGameToMinute, timeBankToMinute]);
 
   const handleClickStart = () => {
     setIsRun(!isRun);
@@ -43,9 +54,12 @@ const Timer = ({ initialTime, players }) => {
     setTimeGame(initialTime);
   };
   const hanldeClickNextTurn = () => {
+    if (!isRun) {
+      setIsRun(true);
+      return
+    }
     setTimeGame(initialTime);
     let id = idPlayer;
-    setIsRun(true);
 
     if (!isFirstTurn) {
       if (idP.current === idPlayer) {
@@ -54,7 +68,6 @@ const Timer = ({ initialTime, players }) => {
         id = idPlayer + 1;
       }
     } else {
-      console.log("isFirstTurn ::" + isFirstTurn);
       if (idP.current === idPlayer && !isComeback) {
         if (!isComeback) {
           console.log("isComeback ::" + isComeback);
@@ -73,9 +86,9 @@ const Timer = ({ initialTime, players }) => {
         }
       }
     }
-
     setIdPlayer(id);
     setBankActualPlayer(player[id].timerBank);
+    setTimeBankToMinute(useSecondsToString(bankActualPlayer))
     updateBankPlayer(idPlayer, bankActualPlayer);
   };
 
@@ -95,8 +108,8 @@ const Timer = ({ initialTime, players }) => {
   return (
     <div>
       <button className="game" onClick={hanldeClickNextTurn}>
-        <Players players={player} />
-        Tiempo de juego: {timeGame}. Tiempo del banco: {bankActualPlayer}
+        Tiempo de juego: <span>{timeGameToMinute}</span> Tiempo del banco: <span>{timeBankToMinute}</span>
+        <Players players={player} timeBankToMinute={timeBankToMinute} />
       </button>
       <div className="buttonsGame">
         <button onClick={handleClickStart}>{isRun ? "Resume" : "Start"}</button>

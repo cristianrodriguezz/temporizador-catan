@@ -1,17 +1,21 @@
 import "./App.css";
-import React from "react";
+import React, { useEffect } from "react";
 import { useState, useRef } from "react";
 import SelectColor from "./components/SelectColor";
 import Timer from "./components/Timer";
-import { useForm } from "react-hook-form";
+import { useMinuteToSecond } from "./hooks/useSecondToMinute";
+import { Players } from "./components/Players";
 
 function App() {
   const [players, setPlayers] = useState([]);
   const [color, setColor] = useState();
   const [time, setTime] = useState();
   const [renderPlayer, setRenderPlayer] = useState(false);
-  const timer = useRef();
-  const timerBank = useRef();
+  const [minutesGame, setMinutesGame] = useState(0);
+  const [secondsGame, setSecondsGame] = useState(0);
+  const [deleteColor, setDeleteColor] = useState(false);
+  const minute = useRef();
+  const second = useRef();
   const nameInput = useRef();
   let id = useRef(-1);
 
@@ -21,57 +25,114 @@ function App() {
   const handleClickStartGame = () => {
     setRenderPlayer(true);
   };
+  const handleChangeTimeSecond = (e) => {
+    const sec = e.target.value;
+    setSecondsGame(sec);
+  };
+  const handleChangeTimeMinute = (e) => {
+    const min = e.target.value;
+    setMinutesGame(min);
+  };
+
+  useEffect(() => {
+    setTime(useMinuteToSecond(minutesGame, secondsGame));
+  }, [minutesGame, secondsGame]);
 
   const handleAddPlayer = (e) => {
     e.preventDefault();
     ++id.current;
-
+    const minutes =
+      minute.current.value === "" ? 0 : parseInt(minute.current.value);
+    const seconds =
+      second.current.value === "" ? 0 : parseInt(second.current.value);
+    const timeBank = useMinuteToSecond(minutes, seconds);
     setPlayers([
       ...players,
       {
         id: id.current,
         name: nameInput.current.value,
         color: color,
-        timerBank: parseInt(timerBank.current.value),
+        timerBank: timeBank,
         isActive: false,
       },
     ]);
-  };
-
-  const handleSubmitTime = (e) => {
-    e.preventDefault();
-    const time = timer.current.value;
-
-    setTime(time);
+    setDeleteColor(!deleteColor);
   };
 
   return renderPlayer ? (
     <Timer initialTime={time} players={players} />
   ) : (
     <div className="App">
-      <h1>Temporizador para juegos de mesa</h1>
-      <form onSubmit={handleSubmitTime}>
-        <label>
-          Tiempo de juego
-          <input type="number" ref={timer} />
-        </label>
-        <button>Enter</button>
+      <h1>Temporizador</h1>
+      <form className="containerTimeGame">
+        <h2>Tiempo por turno: </h2>
+        <div className="containerMinutesGame">
+          <label htmlFor="minutesGame" className="minutesGame">
+            <input
+              onChange={handleChangeTimeMinute}
+              type="number"
+              id="minutesGame"
+              name="minutesGame"
+              min="0"
+              max="59"
+              className="inputTimeGame"
+            ></input>
+          </label>
+          <span>:</span>
+          <label htmlFor="secondsGame" className="minutesGame">
+            <input
+              onChange={handleChangeTimeSecond}
+              type="number"
+              id="secondsGame"
+              name="secondsGame"
+              min="0"
+              max="59"
+              className="inputTimeGame"
+            ></input>
+          </label>
+        </div>
       </form>
-      {time ? <p>Tiempo: {time}</p> : null}
-      <form onSubmit={handleAddPlayer}>
-        <SelectColor color={handleChangeColor} />
-        <label>
-          Jugador
-          <input type="text" id="name" ref={nameInput} />
-        </label>
-        <label>
-          Tiempo del banco
-          <input type="number" ref={timerBank} />
-        </label>
-        <p>Jugadores: {players.length}</p>
-        <button>Agregar</button>
-      </form>
-      <button onClick={handleClickStartGame}>Empezar juego</button>
+      <div className="containerPlayers">
+        <form className="containerAddPlayer" onSubmit={handleAddPlayer}>
+          <div style={{display:'flex'}}>
+            <SelectColor color={handleChangeColor} deleteColor={deleteColor} />
+            <input placeholder="Nombre" type="text" id="name" ref={nameInput} />
+          </div>
+
+          <div className="containerMinutesGame">
+            <h2>Banco de tiempo:</h2>
+            <label htmlFor="minutes">
+              <input
+                type="number"
+                id="minutes"
+                name="minutes"
+                min="0"
+                max="59"
+                ref={minute}
+              ></input>
+            </label>
+            <span>:</span>
+            <label htmlFor="seconds">
+              <input
+                ref={second}
+                type="number"
+                id="seconds"
+                name="seconds"
+                min="0"
+                max="59"
+              ></input>
+            </label>
+          </div>
+          <button style={{ width: "100%", height: "4rem" }}>+</button>
+        </form>
+        <Players players={players} />
+        <button
+          style={{ width: "100%", height: "4rem" }}
+          onClick={handleClickStartGame}
+        >
+          Empezar juego
+        </button>
+      </div>
     </div>
   );
 }
