@@ -108,7 +108,9 @@ const Timer = ({ initialTime, players }) => {
   return (
     <div>
       <button className="game" onClick={hanldeClickNextTurn}>
-        Tiempo de juego: <span>{timeGameToMinute}</span> Tiempo del banco: <span>{timeBankToMinute}</span>
+        <div style={{ backgroundColor: player[idPlayer].color}}>
+          Tiempo de juego: <span >{timeGameToMinute}</span> Tiempo del banco: <span>{timeBankToMinute}</span>
+        </div>
         <Players players={player} timeBankToMinute={timeBankToMinute} />
       </button>
       <div className="buttonsGame">
