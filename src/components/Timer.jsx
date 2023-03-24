@@ -109,10 +109,20 @@ const Timer = ({ initialTime, players }) => {
   return (
     <div>
       <button className="game" onClick={hanldeClickNextTurn}>
-        <div style={{ backgroundColor: player[idPlayer].color }}>
-          <span style={timeGame > 0 ? { fontSize : "30vw", fontFamily: "'Inconsolata', monospace", fontWeight: 900, transition: "font-size 0.15s ease-in-out"}: { fontSize : "20vw", fontFamily: "'Inconsolata', monospace", fontWeight: 900, transition: "font-size 1s ease-in-out"}}>{timeGameToMinute}</span> 
+        <div style={{ backgroundColor: player[idPlayer].color , borderRadius: "3vw" }}>
+          <span 
+            style={
+              timeGame > 0 ? { fontSize : "30vw", fontFamily: "'Inconsolata', monospace", fontWeight: 900, transition: "font-size 0.15s ease-in-out"}:
+              { fontSize : "20vw", fontFamily: "'Inconsolata', monospace", fontWeight: 900, transition: "font-size 1s ease-in-out"}
+            }>{timeGameToMinute}
+          </span> 
           <br />
-          <span style={timeGame > 0 ? { fontSize : "20vw", fontFamily: "'Inconsolata', monospace", fontWeight: 900, transition: "font-size 0.15s ease-in-out"}: { fontSize : "30vw", fontFamily: "'Inconsolata', monospace", fontWeight: 900, transition: "font-size 1s ease-in-out"}}>{timeBankToMinute}</span>
+          <span 
+            style={
+              timeGame > 0 ? { fontSize : "20vw", fontFamily: "'Inconsolata', monospace", fontWeight: 900, transition: "font-size 0.15s ease-in-out"}:
+              { fontSize : "30vw", fontFamily: "'Inconsolata', monospace", fontWeight: 900, transition: "font-size 1s ease-in-out"}
+            }>{timeBankToMinute}
+          </span>
         </div>
         <Players players={player} timeBankToMinute={timeBankToMinute} />
       </button>

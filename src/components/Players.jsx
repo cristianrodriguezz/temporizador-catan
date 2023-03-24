@@ -11,7 +11,7 @@ const PlayersList = ({ players }) => {
         <li key={player.id} className="players">
           <div
             className="player"
-            style={{ background: player.color, borderRadius: "5px" }}
+            style={{ background: player.color, borderRadius: "3vw" }}
           >
             <span>{useSecondsToString(player.timerBank)}</span>
             <p>{player.name}</p>
