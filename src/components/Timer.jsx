@@ -42,7 +42,7 @@ const Timer = ({ initialTime, players }) => {
           hanldeClickNextTurn();
         }
       }
-    }, 100);
+    }, 1000);
     
     return () => clearInterval(interval);
   }, [timeGame, isRun, idPlayer, bankActualPlayer, player, idP, timeGameToMinute, timeBankToMinute]);
@@ -110,9 +110,9 @@ const Timer = ({ initialTime, players }) => {
     <div>
       <button className="game" onClick={hanldeClickNextTurn}>
         <div style={{ backgroundColor: player[idPlayer].color }}>
-          <span style={{ fontSize : "175px", fontFamily: "'Inconsolata', monospace", fontWeight: 900}}>{timeGameToMinute}</span> 
+          <span style={timeGame > 0 ? { fontSize : "30vw", fontFamily: "'Inconsolata', monospace", fontWeight: 900, transition: "font-size 0.15s ease-in-out"}: { fontSize : "20vw", fontFamily: "'Inconsolata', monospace", fontWeight: 900, transition: "font-size 1s ease-in-out"}}>{timeGameToMinute}</span> 
           <br />
-          <span style={{ fontSize : "60px", fontFamily: "'Inconsolata', monospace", fontWeight: 900}}>{timeBankToMinute}</span>
+          <span style={timeGame > 0 ? { fontSize : "20vw", fontFamily: "'Inconsolata', monospace", fontWeight: 900, transition: "font-size 0.15s ease-in-out"}: { fontSize : "30vw", fontFamily: "'Inconsolata', monospace", fontWeight: 900, transition: "font-size 1s ease-in-out"}}>{timeBankToMinute}</span>
         </div>
         <Players players={player} timeBankToMinute={timeBankToMinute} />
       </button>
