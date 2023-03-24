@@ -14,11 +14,12 @@ const Timer = ({ initialTime, players }) => {
   const [timeGameToMinute, setTimeGameToMinute] = useState(useSecondsToString(timeGame))
   const [timeBankToMinute, setTimeBankToMinute] = useState(useSecondsToString(bankActualPlayer))
 
-  console.log(timeBankToMinute);
+
 
   useEffect(() => {
 
     setBankActualPlayer(player[idPlayer]?.timerBank)
+    setTimeBankToMinute(useSecondsToString(bankActualPlayer))
 
   }, [idPlayer, player])
   
@@ -65,7 +66,6 @@ const Timer = ({ initialTime, players }) => {
         id = idPlayer + 1;
       }
     } else {
-      console.log("isFirstTurn ::" + isFirstTurn);
       if (idP.current === idPlayer && !isComeback) {
         if (!isComeback) {
           console.log("isComeback ::" + isComeback);
@@ -102,13 +102,12 @@ const Timer = ({ initialTime, players }) => {
     });
     setPlayer(newBankTimePlayer);
   };
-  console.log(timeGameToMinute);
 
   return (
     <div>
       <button className="game" onClick={hanldeClickNextTurn}>
-        <Players players={player} timeBankToMinute={timeBankToMinute} />
         Tiempo de juego: <span>{timeGameToMinute}</span> Tiempo del banco: <span>{timeBankToMinute}</span>
+        <Players players={player} timeBankToMinute={timeBankToMinute} />
       </button>
       <div className="buttonsGame">
         <button onClick={handleClickStart}>{isRun ? "Resume" : "Start"}</button>

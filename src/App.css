@@ -7,9 +7,19 @@
 h1{
   text-align: center;
 }
+select{
+  max-width: 40%;
+  min-height: 3rem;
+  text-align: center;
+  font-size:1rem;
+}
 .containerMinutesGame{
   display: flex;
   align-items: center;
+}
+.containerAddPlayer{
+  display: flex;
+  flex-direction: column;
 }
 .containerTimeGame{
   display: flex;
@@ -42,5 +52,22 @@ h1{
   display: flex;
   justify-content: space-around;
   align-items: center;
+}
+.containerPlayers{
+  display: flex;
+  flex-direction: column;
+  height: 79vh;
+  justify-content: space-between;
+}
+input#name{
+  width: 100%;
+}
+.player{
+  display: flex;
+  flex-direction: column;
+
+}
+.player span, p{
+  text-align: center;
 }
 

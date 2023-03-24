@@ -4,6 +4,7 @@ import { useState, useRef } from "react";
 import SelectColor from "./components/SelectColor";
 import Timer from "./components/Timer";
 import { useMinuteToSecond } from "./hooks/useSecondToMinute";
+import { Players } from "./components/Players";
 
 function App() {
   const [players, setPlayers] = useState([]);
@@ -26,12 +27,10 @@ function App() {
   };
   const handleChangeTimeSecond = (e) => {
     const sec = e.target.value;
-    console.log(sec);
     setSecondsGame(sec);
   };
   const handleChangeTimeMinute = (e) => {
     const min = e.target.value;
-    console.log(min);
     setMinutesGame(min);
   };
 
@@ -93,43 +92,47 @@ function App() {
           </label>
         </div>
       </form>
-      <form  onSubmit={handleAddPlayer}>
-        <h2>Jugador: </h2> 
-        <SelectColor color={handleChangeColor} deleteColor={deleteColor} />
-        <label>
-          Nombre
-          <input type="text" id="name" ref={nameInput} />
-        </label>
-        <div className="containerMinutesGame">
-          Tiempo de banco del jugador
-          <label htmlFor="minutes">
-            <input
-              type="number"
-              id="minutes"
-              name="minutes"
-              min="0"
-              max="59"
-              ref={minute}
-            ></input>
-          </label>
-          <span>:</span>
-          <label htmlFor="seconds">
-            <input
-              ref={second}
-              type="number"
-              id="seconds"
-              name="seconds"
-              min="0"
-              max="59"
-            ></input>
-          </label>
-        </div>
-        <p>
-          Jugadores: <span>{players.length}</span>
-        </p>
-        <button>Agregar</button>
-      </form>
-      <button onClick={handleClickStartGame}>Empezar juego</button>
+      <div className="containerPlayers">
+        <form className="containerAddPlayer" onSubmit={handleAddPlayer}>
+          <div style={{display:'flex'}}>
+            <SelectColor color={handleChangeColor} deleteColor={deleteColor} />
+            <input placeholder="Nombre" type="text" id="name" ref={nameInput} />
+          </div>
+
+          <div className="containerMinutesGame">
+            <h2>Banco de tiempo:</h2>
+            <label htmlFor="minutes">
+              <input
+                type="number"
+                id="minutes"
+                name="minutes"
+                min="0"
+                max="59"
+                ref={minute}
+              ></input>
+            </label>
+            <span>:</span>
+            <label htmlFor="seconds">
+              <input
+                ref={second}
+                type="number"
+                id="seconds"
+                name="seconds"
+                min="0"
+                max="59"
+              ></input>
+            </label>
+          </div>
+          <button style={{ width: "100%", height: "4rem" }}>+</button>
+        </form>
+        <Players players={players} />
+        <button
+          style={{ width: "100%", height: "4rem" }}
+          onClick={handleClickStartGame}
+        >
+          Empezar juego
+        </button>
+      </div>
     </div>
   );
 }

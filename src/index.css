@@ -7,26 +7,37 @@
   --third-color: #202b38;
   --fontSizeNumbers: 2rem
 }
+html{
+  background-color: var(--principal-color);
+  height: 100%;
+}
 *{
   font-family: 'Exo', sans-serif;
   font-family: 'Quicksand', sans-serif;
   color: var(--text-color);
   box-sizing: border-box;
 }
+h2{
+  width: 67%;
+
+}
 input{
   font-size: var(--fontSizeNumbers);
   text-align: center;
+}
+select option:hover{
+
+  background-color: #f50f0f00;
+}
+select option:checked {
+  background-color: #00000000;
 }
 span{
   font-family: 'Exo', sans-serif;
   font-family: 'Quicksand', sans-serif;
   font-size: var(--fontSizeNumbers);
 }
-html{
-  background-color: var(--principal-color);
---background: var(--second-color);
---background-alt: var(--third-color);
-}
+
 input, option, select, button{
   border: none;
   border-radius: 5px;
@@ -37,5 +48,8 @@ input:focus{
   border: 2px solid var(--text-color);
   outline: none;
   margin: 0;
+}
+button{
+  font-size: var(--fontSizeNumbers);
 }
 
