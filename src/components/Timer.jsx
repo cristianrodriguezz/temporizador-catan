@@ -14,7 +14,11 @@ const Timer = ({ initialTime, players }) => {
   const [bankActualPlayer, setBankActualPlayer] = useState(player[idPlayer]?.timerBank);
   const [timeGameToMinute, setTimeGameToMinute] = useState(useSecondsToString(timeGame))
   const [timeBankToMinute, setTimeBankToMinute] = useState(useSecondsToString(bankActualPlayer))
-
+  
+  const [passedTurnTime, setPassedTurnTime] = useState(initialTime)
+  const [passedTurnIdPlayer, setPassedTurnIdPlayer] = useState(idPlayer)
+  const [isComebackDisable, setIsComebackDisable] = useState(true)
+  
 
   useEffect(() => {
 
@@ -49,6 +53,15 @@ const Timer = ({ initialTime, players }) => {
   const handleClickStart = () => {
     setIsRun(!isRun);
   };
+
+  const handleClickComebackTurn = () => {
+    setIsRun(true);
+    setIdPlayer(passedTurnIdPlayer);
+    setTimeGame(passedTurnTime);
+    setTimeGameToMinute(useSecondsToString(passedTurnTime));
+    setIsComebackDisable(true);
+  };
+
   const hanldeClickReset = () => {
     let id = idPlayer;
     setTimeGame(initialTime);
@@ -62,7 +75,13 @@ const Timer = ({ initialTime, players }) => {
       setIsRun(true);
       return
     }
+    // Almacena informacion para handleClickComebackTurn
+    setPassedTurnIdPlayer(idPlayer);
+    setPassedTurnTime(timeGame);
+    setIsComebackDisable(false);
+    
     setTimeGame(initialTime);
+    
     setTimeGameToMinute(useSecondsToString(initialTime));
     let id = idPlayer;
 
@@ -131,8 +150,9 @@ const Timer = ({ initialTime, players }) => {
         <Players players={player} playerId={idPlayer} timeBankToMinute={timeBankToMinute} />
       </button>
       <div className="buttonsGame">
-        <button onClick={handleClickStart}>{isRun ? "Resume" : "Start"}</button>
+        <button onClick={handleClickStart}>{isRun ? "Pause" : "Start"}</button>
         <button onClick={hanldeClickReset}>Reset</button>
+        <button onClick={handleClickComebackTurn} disabled={isComebackDisable} style={!isComebackDisable ? {}:{opacity: 0.25}}>Previous Turn</button>
       </div>
     </div>
   );
