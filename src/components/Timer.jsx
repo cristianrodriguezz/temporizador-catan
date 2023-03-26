@@ -17,7 +17,7 @@ const Timer = ({ initialTime, players }) => {
   
   const [passedTurnTime, setPassedTurnTime] = useState(initialTime)
   const [passedTurnIdPlayer, setPassedTurnIdPlayer] = useState(idPlayer)
-  const [isComebackDisable, setIsComebackDisable] = useState(false)
+  const [isComebackDisable, setIsComebackDisable] = useState(true)
   
 
   useEffect(() => {
@@ -152,7 +152,7 @@ const Timer = ({ initialTime, players }) => {
       <div className="buttonsGame">
         <button onClick={handleClickStart}>{isRun ? "Pause" : "Start"}</button>
         <button onClick={hanldeClickReset}>Reset</button>
-        <button onClick={handleClickComebackTurn} disabled={isComebackDisable} style={!isComebackDisable ? {}:{opacity: 0.30}}>Comeback Turn</button>
+        <button onClick={handleClickComebackTurn} disabled={isComebackDisable} style={!isComebackDisable ? {}:{opacity: 0.25}}>Previous Turn</button>
       </div>
     </div>
   );
