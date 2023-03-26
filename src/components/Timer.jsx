@@ -16,7 +16,6 @@ const Timer = ({ initialTime, players }) => {
   const [timeBankToMinute, setTimeBankToMinute] = useState(useSecondsToString(bankActualPlayer))
 
 
-
   useEffect(() => {
 
     setBankActualPlayer(player[idPlayer]?.timerBank)
@@ -25,22 +24,22 @@ const Timer = ({ initialTime, players }) => {
   }, [idPlayer, player])
   
 
-
   useEffect(() => {
     let interval = null;
 
     interval = setInterval(() => {
-      if (isRun) {
-        if (timeGame <= 0) {
-          setBankActualPlayer((prev) => prev - 1);
-          setTimeBankToMinute(useSecondsToString(bankActualPlayer))
-        } else {
-          setTimeGame((prev) => prev - 1);
-          setTimeGameToMinute(useSecondsToString(timeGame - 1))
-        }
-        if (bankActualPlayer <= 0 && timeGame <= 0) {
-          hanldeClickNextTurn();
-        }
+      if (!isRun) {
+        return
+      }
+      if (timeGame > 0) {
+        setTimeGame((prev) => prev - 1);
+        setTimeGameToMinute(useSecondsToString(timeGame - 1))
+      } else {
+        setBankActualPlayer((prev) => prev - 1);
+        setTimeBankToMinute(useSecondsToString(bankActualPlayer))
+      }
+      if (bankActualPlayer <= 0 && timeGame <= 0) {
+        hanldeClickNextTurn();
       }
     }, 1000);
     
@@ -51,7 +50,11 @@ const Timer = ({ initialTime, players }) => {
     setIsRun(!isRun);
   };
   const hanldeClickReset = () => {
+    let id = idPlayer;
     setTimeGame(initialTime);
+    setTimeGameToMinute(useSecondsToString(initialTime));
+    setBankActualPlayer(player[id].timerBank);
+    setTimeBankToMinute(useSecondsToString(player[id].timerBank))
     setIsRun(true);
   };
   const hanldeClickNextTurn = () => {
@@ -88,10 +91,10 @@ const Timer = ({ initialTime, players }) => {
         }
       }
     }
+    updateBankPlayer(idPlayer, bankActualPlayer);
     setIdPlayer(id);
     setBankActualPlayer(player[id].timerBank);
     setTimeBankToMinute(useSecondsToString(bankActualPlayer))
-    updateBankPlayer(idPlayer, bankActualPlayer);
   };
 
   const updateBankPlayer = (playerId, bankAP) => {
