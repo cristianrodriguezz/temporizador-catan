@@ -19,6 +19,7 @@ function App() {
   const nameInput = useRef();
   let id = useRef(-1);
 
+
   const handleChangeColor = (color) => {
     setColor(color);
   };

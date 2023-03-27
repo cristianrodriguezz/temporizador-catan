@@ -1,11 +1,12 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { useSecondsToString } from "../hooks/useSecondToMinute";
 import { stylePlayerSelected } from "../constants/stylePlayerSelected";
 import { motion } from "framer-motion";
 
 const PlayersList = ({ players, playerId, timeBankToMinute }) => {
+  console.log(players.length);
   return (
-    <ul className="timerListPlayer">
+    <ul className="timerListPlayer" style={players.length > 5 ? {gridTemplateColumns: 'repeat(auto-fill, minmax(150px,1fr))'}: null}>
       {players?.map((player) => (
         <li key={player.id} className="players">
           <motion.div
