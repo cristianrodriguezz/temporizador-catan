@@ -10,57 +10,48 @@ const Timer = ({ initialTime, players }) => {
   const [isFirstTurn, setIsFirstTurn] = useState(true);
   const [isComeback, setIsComeback] = useState(false);
 
-  const idP = useRef(player.length - 1);
-  const [idPlayer, setIdPlayer] = useState(0);
-  const [bankActualPlayer, setBankActualPlayer] = useState(
-    player[idPlayer]?.timerBank
-  );
-  const [timeGameToMinute, setTimeGameToMinute] = useState(
-    useSecondsToString(timeGame)
-  );
-  const [timeBankToMinute, setTimeBankToMinute] = useState(
-    useSecondsToString(bankActualPlayer)
-  );
-
-  const [passedTurnTime, setPassedTurnTime] = useState(initialTime);
-  const [passedTurnIdPlayer, setPassedTurnIdPlayer] = useState(idPlayer);
-  const [isComebackDisable, setIsComebackDisable] = useState(true);
+  const idP = useRef(player.length - 1)
+  const [idPlayer,setIdPlayer] = useState(0)
+  const [bankActualPlayer, setBankActualPlayer] = useState(player[idPlayer]?.timerBank);
+  const [timeGameToMinute, setTimeGameToMinute] = useState(useSecondsToString(timeGame))
+  const [timeBankToMinute, setTimeBankToMinute] = useState(useSecondsToString(bankActualPlayer))
+  
+  const [passedTurnTime, setPassedTurnTime] = useState(initialTime)
+  const [passedTurnIdPlayer, setPassedTurnIdPlayer] = useState(idPlayer)
+  const [isComebackDisable, setIsComebackDisable] = useState(true)
+  
+  const [isButtonsDisable, setIsButtonsDisable] = useState(true)
+  
 
   useEffect(() => {
-    setBankActualPlayer(player[idPlayer]?.timerBank);
+
+    setBankActualPlayer(player[idPlayer]?.timerBank)
     setTimeBankToMinute(useSecondsToString(player[idPlayer]?.timerBank));
-  }, [idPlayer, player]);
+
+  }, [idPlayer, player])
+  
 
   useEffect(() => {
     let interval = null;
 
     interval = setInterval(() => {
       if (!isRun) {
-        return;
+        return
       }
       if (timeGame > 0) {
         setTimeGame((prev) => prev - 1);
-        setTimeGameToMinute(useSecondsToString(timeGame - 1));
+        setTimeGameToMinute(useSecondsToString(timeGame - 1))
       } else {
         setBankActualPlayer((prev) => prev - 1);
-        setTimeBankToMinute(useSecondsToString(bankActualPlayer));
+        setTimeBankToMinute(useSecondsToString(bankActualPlayer))
       }
       if (bankActualPlayer <= 0 && timeGame <= 0) {
         hanldeClickNextTurn();
       }
     }, 1000);
-
+    
     return () => clearInterval(interval);
-  }, [
-    timeGame,
-    isRun,
-    idPlayer,
-    bankActualPlayer,
-    player,
-    idP,
-    timeGameToMinute,
-    timeBankToMinute,
-  ]);
+  }, [timeGame, isRun, idPlayer, bankActualPlayer, player, idP, timeGameToMinute, timeBankToMinute]);
 
   const handleClickStart = () => {
     setIsRun(!isRun);
@@ -68,33 +59,37 @@ const Timer = ({ initialTime, players }) => {
 
   const handleClickComebackTurn = () => {
     setIsRun(true);
+    setIsButtonsDisable(true);
     setIdPlayer(passedTurnIdPlayer);
     setTimeGame(passedTurnTime);
     setTimeGameToMinute(useSecondsToString(passedTurnTime));
     setIsComebackDisable(true);
   };
 
+  const handleClickButtonsDisable = () => {
+    setIsButtonsDisable(!isButtonsDisable);
+  };
+
   const hanldeClickReset = () => {
     let id = idPlayer;
-    setTimeGame(initialTime);
-    setTimeGameToMinute(useSecondsToString(initialTime));
+    setIsButtonsDisable(true);
+    setVariablesTimeGameToInicial();
     setBankActualPlayer(player[id].timerBank);
-    setTimeBankToMinute(useSecondsToString(player[id].timerBank));
+    setTimeBankToMinute(useSecondsToString(player[id].timerBank))
     setIsRun(true);
   };
   const hanldeClickNextTurn = () => {
     if (!isRun) {
       setIsRun(true);
-      return;
+      return
     }
     // Almacena informacion para handleClickComebackTurn
-    setPassedTurnIdPlayer(idPlayer);
-    setPassedTurnTime(timeGame);
-    setIsComebackDisable(false);
+    setVariablesPassedTurn();
+    // Reinicia timer de turno
+    setVariablesTimeGameToInicial();
+    // Bloquea los botones
+    setIsButtonsDisable(true);
 
-    setTimeGame(initialTime);
-
-    setTimeGameToMinute(useSecondsToString(initialTime));
     let id = idPlayer;
 
     if (!isFirstTurn) {
@@ -125,7 +120,7 @@ const Timer = ({ initialTime, players }) => {
     updateBankPlayer(idPlayer, bankActualPlayer);
     setIdPlayer(id);
     setBankActualPlayer(player[id].timerBank);
-    setTimeBankToMinute(useSecondsToString(bankActualPlayer));
+    setTimeBankToMinute(useSecondsToString(bankActualPlayer))
   };
 
   const updateBankPlayer = (playerId, bankAP) => {
@@ -141,6 +136,18 @@ const Timer = ({ initialTime, players }) => {
     setPlayer(newBankTimePlayer);
   };
 
+  const setVariablesPassedTurn = () => {
+  // const setVariablesPassedTurn = (timeGame) => {
+    setPassedTurnIdPlayer(idPlayer);
+    setPassedTurnTime(timeGame);
+    setIsComebackDisable(false);
+  };
+  
+  const setVariablesTimeGameToInicial = () => {
+    setTimeGame(initialTime);
+    setTimeGameToMinute(useSecondsToString(initialTime));
+  };
+  
   return (
     <div className="containerStartGame">
       <motion.button
