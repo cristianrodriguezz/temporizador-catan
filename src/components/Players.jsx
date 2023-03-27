@@ -2,9 +2,14 @@ import React from "react";
 import { useSecondsToString } from "../hooks/useSecondToMinute";
 import { stylePlayerSelected } from "../constants/stylePlayerSelected";
 import { motion } from "framer-motion";
+import { Reorder } from "framer-motion"
+import { useState } from "react"
 
 const PlayersList = ({ players, playerId, timeBankToMinute }) => {
-  console.log(players.length);
+
+  const [playersReorder, setPlayersReorder] = useState(players);
+  
+
   return (
     <ul className="timerListPlayer" style={players.length > 5 ? {gridTemplateColumns: 'repeat(auto-fill, minmax(150px,1fr))'}: null}>
       {players?.map((player) => (
@@ -33,12 +38,13 @@ const PlayersList = ({ players, playerId, timeBankToMinute }) => {
   );
 };
 
-const NotPlayers = () => {
-  return <p className="notPlayers">No hay jugadores agregados</p>;
+const NotPlayers = ({errorNotPlayers}) => {
+
+  return errorNotPlayers ?<p className="notPlayers" style={{color:"red"}}>Agregue jugadores para iniciar</p> : <p className="notPlayers">No hay jugadores agregados</p>;
 };
 
-export const Players = ({ players, playerId, timeBankToMinute }) => {
-  const hasPlayers = players?.length > 0;
+export const Players = ({ players, playerId, timeBankToMinute, errorNotPlayers }) => {
+  const hasPlayers =  players?.length > 0 
 
   return hasPlayers ? (
     <PlayersList
@@ -47,6 +53,6 @@ export const Players = ({ players, playerId, timeBankToMinute }) => {
       timeBankToMinute={timeBankToMinute}
     />
   ) : (
-    <NotPlayers />
+    <NotPlayers errorNotPlayers={errorNotPlayers} />
   );
 };

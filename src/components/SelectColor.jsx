@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 
-const SelectColor = ({ color, deleteColor }) => {
+const SelectColor = ({ color, isDeleteColor }) => {
   const [options, setOptions] = useState([
     { id: 1, value: "red", label: "Red" },
     { id: 2, value: "green", label: "Green" },
@@ -12,15 +12,16 @@ const SelectColor = ({ color, deleteColor }) => {
   const [optionSelected, setOptionSelected] = useState();
   const colorInput = useRef();
 
+
   useEffect(() => {
     const updatedOptions = options.filter(
       (option) => option.value !== optionSelected
     );
     setOptions(updatedOptions);
-  }, [deleteColor]);
+  }, [isDeleteColor]);
 
   const handleSelectChange = (e) => {
-    const selectColor = e.target.value;
+    let selectColor = e.target.value;
     setOptionSelected(selectColor);
     color(selectColor);
   };

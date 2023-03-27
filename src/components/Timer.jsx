@@ -152,8 +152,18 @@ const Timer = ({ initialTime, players }) => {
           className="timer"
           style={{ backgroundColor: player[idPlayer].color }}
         >
-          <span>{timeGameToMinute}</span>
-          <span>{timeBankToMinute}</span>
+          <span 
+            style={
+              timeGame > 0 ? { fontSize : "4rem", fontFamily: "'Inconsolata', monospace", fontWeight: 900, transition: "font-size 0.15s ease-in-out"}:
+              { fontSize : "2rem", fontFamily: "'Inconsolata', monospace", fontWeight: 900, transition: "font-size 1s ease-in-out"}
+            }>{timeGameToMinute}
+          </span> 
+          <span 
+            style={
+              timeGame > 0 ? { fontSize : "2rem", fontFamily: "'Inconsolata', monospace", fontWeight: 900, transition: "font-size 0.15s ease-in-out"}:
+              { fontSize : "4rem", fontFamily: "'Inconsolata', monospace", fontWeight: 900, transition: "font-size 1s ease-in-out"}
+            }>{timeBankToMinute}
+          </span>
         </div>
         <Players
           players={player}
@@ -172,6 +182,7 @@ const Timer = ({ initialTime, players }) => {
           Previous Turn
         </button>
       </div>
+      
     </div>
   );
 };
