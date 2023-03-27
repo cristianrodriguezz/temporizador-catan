@@ -19,6 +19,8 @@ const Timer = ({ initialTime, players }) => {
   const [passedTurnIdPlayer, setPassedTurnIdPlayer] = useState(idPlayer)
   const [isComebackDisable, setIsComebackDisable] = useState(true)
   
+  const [isButtonsDisable, setIsButtonsDisable] = useState(true)
+  
 
   useEffect(() => {
 
@@ -56,16 +58,21 @@ const Timer = ({ initialTime, players }) => {
 
   const handleClickComebackTurn = () => {
     setIsRun(true);
+    setIsButtonsDisable(true);
     setIdPlayer(passedTurnIdPlayer);
     setTimeGame(passedTurnTime);
     setTimeGameToMinute(useSecondsToString(passedTurnTime));
     setIsComebackDisable(true);
   };
 
+  const handleClickButtonsDisable = () => {
+    setIsButtonsDisable(!isButtonsDisable);
+  };
+
   const hanldeClickReset = () => {
     let id = idPlayer;
-    setTimeGame(initialTime);
-    setTimeGameToMinute(useSecondsToString(initialTime));
+    setIsButtonsDisable(true);
+    setVariablesTimeGameToInicial();
     setBankActualPlayer(player[id].timerBank);
     setTimeBankToMinute(useSecondsToString(player[id].timerBank))
     setIsRun(true);
@@ -76,13 +83,12 @@ const Timer = ({ initialTime, players }) => {
       return
     }
     // Almacena informacion para handleClickComebackTurn
-    setPassedTurnIdPlayer(idPlayer);
-    setPassedTurnTime(timeGame);
-    setIsComebackDisable(false);
-    
-    setTimeGame(initialTime);
-    
-    setTimeGameToMinute(useSecondsToString(initialTime));
+    setVariablesPassedTurn();
+    // Reinicia timer de turno
+    setVariablesTimeGameToInicial();
+    // Bloquea los botones
+    setIsButtonsDisable(true);
+
     let id = idPlayer;
 
     if (!isFirstTurn) {
@@ -129,6 +135,18 @@ const Timer = ({ initialTime, players }) => {
     setPlayer(newBankTimePlayer);
   };
 
+  const setVariablesPassedTurn = () => {
+  // const setVariablesPassedTurn = (timeGame) => {
+    setPassedTurnIdPlayer(idPlayer);
+    setPassedTurnTime(timeGame);
+    setIsComebackDisable(false);
+  };
+  
+  const setVariablesTimeGameToInicial = () => {
+    setTimeGame(initialTime);
+    setTimeGameToMinute(useSecondsToString(initialTime));
+  };
+
   return (
     <div>
       <button className="game" onClick={hanldeClickNextTurn}>
@@ -150,9 +168,10 @@ const Timer = ({ initialTime, players }) => {
         <Players players={player} playerId={idPlayer} timeBankToMinute={timeBankToMinute} />
       </button>
       <div className="buttonsGame">
-        <button onClick={handleClickStart}>{isRun ? "Pause" : "Start"}</button>
-        <button onClick={hanldeClickReset}>Reset</button>
-        <button onClick={handleClickComebackTurn} disabled={isComebackDisable} style={!isComebackDisable ? {}:{opacity: 0.25}}>Previous Turn</button>
+        <button onClick={handleClickStart} /*disabled={isButtonsDisable} style={!(isButtonsDisable) ? {}:{opacity: 0.25}}*/>{isRun ? "Pause" : "Start"}</button>
+        <button onClick={hanldeClickReset} disabled={isButtonsDisable} style={!(isButtonsDisable) ? {}:{opacity: 0.25}}>Reset</button>
+        <button onClick={handleClickComebackTurn} disabled={isComebackDisable || isButtonsDisable} style={!(isComebackDisable || isButtonsDisable) ? {}:{opacity: 0.25}}>Previous Turn</button>
+        <button onClick={handleClickButtonsDisable}>{isButtonsDisable ? "Unlock" : "Lock"}</button>
       </div>
     </div>
   );
