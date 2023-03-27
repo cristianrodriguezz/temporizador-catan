@@ -76,6 +76,7 @@ function App() {
               min="0"
               max="59"
               className="inputTimeGame"
+              placeholder="00"
             ></input>
           </label>
           <span>:</span>
@@ -88,6 +89,7 @@ function App() {
               min="0"
               max="59"
               className="inputTimeGame"
+              placeholder="00"
             ></input>
           </label>
         </div>
@@ -103,6 +105,7 @@ function App() {
             <h2>Banco de tiempo:</h2>
             <label htmlFor="minutes">
               <input
+              placeholder="00"
                 type="number"
                 id="minutes"
                 name="minutes"
@@ -114,6 +117,7 @@ function App() {
             <span>:</span>
             <label htmlFor="seconds">
               <input
+              placeholder="00"
                 ref={second}
                 type="number"
                 id="seconds"
@@ -127,7 +131,7 @@ function App() {
         </form>
         <Players players={players} />
         <button
-          style={{ width: "100%", height: "4rem" }}
+          style={{ width: "100%", height: "4rem", marginBottom: '10px' }}
           onClick={handleClickStartGame}
         >
           Empezar juego

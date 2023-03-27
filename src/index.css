@@ -7,16 +7,33 @@
   --third-color: #202b38;
   --fontSizeNumbers: 2rem
 }
-html{
-  background-color: var(--principal-color);
-  height: 100%;
-}
 *{
   font-family: 'Exo', sans-serif;
   font-family: 'Quicksand', sans-serif;
   color: var(--text-color);
   box-sizing: border-box;
 }
+html{
+  height: 100%;
+}
+body{
+  height: 100%;
+  margin: 0;
+  background-color: var(--principal-color);
+  height: 100%;
+}
+#root{
+  height: 100%;
+}
+.App{
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  margin-left: 3px;
+  margin-right: 3px;
+}
+
+
 h2{
   width: 67%;
 
@@ -24,6 +41,8 @@ h2{
 input{
   font-size: var(--fontSizeNumbers);
   text-align: center;
+  padding: 0;
+  margin: 0;
 }
 select option:hover{
 
@@ -51,5 +70,7 @@ input:focus{
 }
 button{
   font-size: var(--fontSizeNumbers);
+  margin: 0;
+  padding: 0;
 }
 
