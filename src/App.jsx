@@ -19,7 +19,6 @@ function App() {
   const nameInput = useRef();
   let id = useRef(-1);
 
-
   const handleChangeColor = (color) => {
     setColor(color);
   };
@@ -64,80 +63,90 @@ function App() {
     <Timer initialTime={time} players={players} />
   ) : (
     <div className="App">
-      <h1>Temporizador</h1>
-      <form className="containerTimeGame">
-        <h2>Tiempo por turno: </h2>
-        <div className="containerMinutesGame">
-          <label htmlFor="minutesGame" className="minutesGame">
-            <input
-              onChange={handleChangeTimeMinute}
-              type="number"
-              id="minutesGame"
-              name="minutesGame"
-              min="0"
-              max="59"
-              className="inputTimeGame"
-              placeholder="00"
-            ></input>
-          </label>
-          <span>:</span>
-          <label htmlFor="secondsGame" className="minutesGame">
-            <input
-              onChange={handleChangeTimeSecond}
-              type="number"
-              id="secondsGame"
-              name="secondsGame"
-              min="0"
-              max="59"
-              className="inputTimeGame"
-              placeholder="00"
-            ></input>
-          </label>
-        </div>
-      </form>
-      <div className="containerPlayers">
-        <form className="containerAddPlayer" onSubmit={handleAddPlayer}>
-          <div style={{display:'flex'}}>
-            <SelectColor color={handleChangeColor} deleteColor={deleteColor} />
-            <input placeholder="Nombre" type="text" id="name" ref={nameInput} />
-          </div>
-
+      <div>
+        <h1>Temporizador</h1>
+        <form className="containerTimeGame">
+          <h2>Tiempo por turno: </h2>
           <div className="containerMinutesGame">
-            <h2>Banco de tiempo:</h2>
-            <label htmlFor="minutes">
+            <label htmlFor="minutesGame" className="minutesGame">
               <input
-              placeholder="00"
+                onChange={handleChangeTimeMinute}
                 type="number"
-                id="minutes"
-                name="minutes"
+                id="minutesGame"
+                name="minutesGame"
                 min="0"
                 max="59"
-                ref={minute}
+                className="inputTimeGame"
+                placeholder="00"
               ></input>
             </label>
             <span>:</span>
-            <label htmlFor="seconds">
+            <label htmlFor="secondsGame" className="minutesGame">
               <input
-              placeholder="00"
-                ref={second}
+                onChange={handleChangeTimeSecond}
                 type="number"
-                id="seconds"
-                name="seconds"
+                id="secondsGame"
+                name="secondsGame"
                 min="0"
                 max="59"
+                className="inputTimeGame"
+                placeholder="00"
               ></input>
             </label>
           </div>
-          <button style={{ width: "100%", height: "4rem" }}>+</button>
         </form>
-        <Players players={players} />
-        <button
-          style={{ width: "100%", height: "4rem", marginBottom: '10px' }}
-          onClick={handleClickStartGame}
-        >
-          Empezar juego
-        </button>
+        <div className="containerPlayers">
+          <form className="containerAddPlayer" onSubmit={handleAddPlayer}>
+            <div style={{ display: "flex" }}>
+              <SelectColor
+                color={handleChangeColor}
+                deleteColor={deleteColor}
+              />
+              <input
+                placeholder="Nombre"
+                type="text"
+                id="name"
+                ref={nameInput}
+              />
+            </div>
+
+            <div className="containerMinutesGame">
+              <h2>Banco de tiempo:</h2>
+              <label htmlFor="minutes">
+                <input
+                  placeholder="00"
+                  type="number"
+                  id="minutes"
+                  name="minutes"
+                  min="0"
+                  max="59"
+                  ref={minute}
+                ></input>
+              </label>
+              <span>:</span>
+              <label htmlFor="seconds">
+                <input
+                  placeholder="00"
+                  ref={second}
+                  type="number"
+                  id="seconds"
+                  name="seconds"
+                  min="0"
+                  max="59"
+                ></input>
+              </label>
+            </div>
+            <button style={{ width: "100%", height: "4rem" }}>+</button>
+          </form>
+          <Players players={players} />
+        </div>
       </div>
+      <button
+        style={{ width: "100%", height: "4rem", marginBottom: "50px" }}
+        onClick={handleClickStartGame}
+      >
+        Empezar juego
+      </button>
     </div>
   );
 }
