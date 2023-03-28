@@ -79,7 +79,7 @@ const Timer = ({ initialTime, players }) => {
     setIsRun(true);
   };
   const hanldeClickNextTurn = () => {
-    if (!isRun) {
+    if (!isRun || (timeGame > initialTime-1)) {
       setIsRun(true);
       return
     }
@@ -101,7 +101,6 @@ const Timer = ({ initialTime, players }) => {
     } else {
       if (idP.current === idPlayer && !isComeback) {
         if (!isComeback) {
-          console.log("isComeback ::" + isComeback);
           id = idPlayer;
           setIsComeback(true);
         }
@@ -147,7 +146,7 @@ const Timer = ({ initialTime, players }) => {
     setTimeGame(initialTime);
     setTimeGameToMinute(useSecondsToString(initialTime));
   };
-  
+
   return (
     <div className="containerStartGame">
       <motion.button
@@ -161,14 +160,14 @@ const Timer = ({ initialTime, players }) => {
         >
           <span 
             style={
-              timeGame > 0 ? { fontSize : "4rem", fontFamily: "'Inconsolata', monospace", fontWeight: 900, transition: "font-size 0.15s ease-in-out"}:
-              { fontSize : "2rem", fontFamily: "'Inconsolata', monospace", fontWeight: 900, transition: "font-size 1s ease-in-out"}
+              timeGame > 0 ? { fontSize : "6rem", fontFamily: "'Inconsolata', monospace", fontWeight: 900, transition: "font-size 0.15s ease-in-out"}:
+              { fontSize : "4rem", fontFamily: "'Inconsolata', monospace", fontWeight: 900, transition: "font-size 1s ease-in-out"}
             }>{timeGameToMinute}
           </span> 
           <span 
             style={
-              timeGame > 0 ? { fontSize : "2rem", fontFamily: "'Inconsolata', monospace", fontWeight: 900, transition: "font-size 0.15s ease-in-out"}:
-              { fontSize : "4rem", fontFamily: "'Inconsolata', monospace", fontWeight: 900, transition: "font-size 1s ease-in-out"}
+              timeGame > 0 ? { fontSize : "4rem", fontFamily: "'Inconsolata', monospace", fontWeight: 900, transition: "font-size 0.15s ease-in-out"}:
+              { fontSize : "6rem", fontFamily: "'Inconsolata', monospace", fontWeight: 900, transition: "font-size 1s ease-in-out"}
             }>{timeBankToMinute}
           </span>
         </div>
@@ -179,17 +178,38 @@ const Timer = ({ initialTime, players }) => {
         />
       </motion.button>
       <div className="buttonsGame">
-        <button onClick={handleClickStart}>{isRun ? "Pause" : "Start"}</button>
-        <button onClick={hanldeClickReset}>Reset</button>
+        <button
+          onClick={handleClickStart}
+          style={{width: '5rem', height: '3rem', display: 'flex', justifyContent: 'center', alignItems: 'center' }}
+        >
+          {isRun ?
+          <img style={{ width: '5rem', height: '5rem' }} src="./public/buttonPause.svg" alt="Pause" />
+          : <img style={{ width: '5rem', height: '5rem' }} src="./public/buttonPlay.svg" alt="Play" />}
+        </button>
+        <button 
+          onClick={hanldeClickReset}
+          disabled={isButtonsDisable}
+          style={(isButtonsDisable) ? { opacity: 0.25,  width: '5rem', height: '3rem', display: 'flex', justifyContent: 'center', alignItems: 'center' } : { width: '5rem', height: '3rem', display: 'flex', justifyContent: 'center', alignItems: 'center' }}
+        >
+          <img style={{ width: '5rem', height: '5rem' }} src="./public/buttonReset.svg" alt="Reset" />
+          </button>
         <button
           onClick={handleClickComebackTurn}
-          disabled={isComebackDisable}
-          style={!isComebackDisable ? {} : { opacity: 0.25 }}
+          disabled={isComebackDisable || isButtonsDisable}
+          style={(isComebackDisable || isButtonsDisable) ? { opacity: 0.25, width: '5rem', height: '3rem', display: 'flex', justifyContent: 'center', alignItems: 'center' } : {width: '5rem', height: '3rem', display: 'flex', justifyContent: 'center', alignItems: 'center'}}
         >
-          Previous Turn
+          <img style={{ width: '5rem', height: '5rem' }} src="./public/buttonComebackTurn.svg" alt="Previous Turn" />
+        </button>
+        <button
+          onClick={handleClickButtonsDisable}
+          style={{width: '5rem', height: '3rem', display: 'flex', justifyContent: 'center', alignItems: 'center' }}
+        >
+          { isButtonsDisable ?
+          <img style={{ width: '5rem', height: '5rem' }} src="./public/buttonUnlock.svg" alt="Unlocked" />
+          :<img style={{ width: '5rem', height: '5rem' }} src="./public/buttonLock.svg" alt="Locked" />
+        }
         </button>
       </div>
-      
     </div>
   );
 };
