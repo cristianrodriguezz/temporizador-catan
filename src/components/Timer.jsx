@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { Players } from "./Players";
 import { useSecondsToString } from "../hooks/useSecondToMinute";
+import { styleButtonsTimer } from "../constants/styleButtonsTimer";
 import { motion } from "framer-motion";
 
 const Timer = ({ initialTime, players }) => {
@@ -191,7 +192,7 @@ const Timer = ({ initialTime, players }) => {
         <button 
           onClick={hanldeClickReset}
           disabled={isButtonsDisable}
-          style={(isButtonsDisable) ? { opacity: 0.25,  width: '5rem', height: '3rem', display: 'flex', justifyContent: 'center', alignItems: 'center' } : { width: '5rem', height: '3rem', display: 'flex', justifyContent: 'center', alignItems: 'center' }}
+          style={styleButtonsTimer(isButtonsDisable)}
         >
           <img style={{ width: '5rem', height: '5rem' }} src="./public/buttonReset.svg" alt="Reset" />
           </button>
