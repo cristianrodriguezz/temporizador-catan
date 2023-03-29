@@ -156,7 +156,9 @@ const Timer = ({ initialTime, players }) => {
       >
         <div
           className="timer"
-          style={{ backgroundColor: player[idPlayer].color }}
+          style={{ backgroundColor: player[idPlayer].color,
+            height : 'auto'
+          }}
         >
           <span 
             style={
