@@ -73,9 +73,9 @@ select{
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  width: 100%;
   margin: 0;
-
+  width: 100%;
+  max-width: 500px;
 }
 .buttonsGame{
   display: flex;
@@ -105,6 +105,7 @@ input#name{
   flex-direction: column;
   justify-content: space-between;
   height: 95%;
+  align-items: center;
 }
 
 @media only screen and (max-width: 767px){

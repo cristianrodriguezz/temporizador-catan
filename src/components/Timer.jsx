@@ -10,57 +10,48 @@ const Timer = ({ initialTime, players }) => {
   const [isFirstTurn, setIsFirstTurn] = useState(true);
   const [isComeback, setIsComeback] = useState(false);
 
-  const idP = useRef(player.length - 1);
-  const [idPlayer, setIdPlayer] = useState(0);
-  const [bankActualPlayer, setBankActualPlayer] = useState(
-    player[idPlayer]?.timerBank
-  );
-  const [timeGameToMinute, setTimeGameToMinute] = useState(
-    useSecondsToString(timeGame)
-  );
-  const [timeBankToMinute, setTimeBankToMinute] = useState(
-    useSecondsToString(bankActualPlayer)
-  );
-
-  const [passedTurnTime, setPassedTurnTime] = useState(initialTime);
-  const [passedTurnIdPlayer, setPassedTurnIdPlayer] = useState(idPlayer);
-  const [isComebackDisable, setIsComebackDisable] = useState(true);
+  const idP = useRef(player.length - 1)
+  const [idPlayer,setIdPlayer] = useState(0)
+  const [bankActualPlayer, setBankActualPlayer] = useState(player[idPlayer]?.timerBank);
+  const [timeGameToMinute, setTimeGameToMinute] = useState(useSecondsToString(timeGame))
+  const [timeBankToMinute, setTimeBankToMinute] = useState(useSecondsToString(bankActualPlayer))
+  
+  const [passedTurnTime, setPassedTurnTime] = useState(initialTime)
+  const [passedTurnIdPlayer, setPassedTurnIdPlayer] = useState(idPlayer)
+  const [isComebackDisable, setIsComebackDisable] = useState(true)
+  
+  const [isButtonsDisable, setIsButtonsDisable] = useState(true)
+  
 
   useEffect(() => {
-    setBankActualPlayer(player[idPlayer]?.timerBank);
+
+    setBankActualPlayer(player[idPlayer]?.timerBank)
     setTimeBankToMinute(useSecondsToString(player[idPlayer]?.timerBank));
-  }, [idPlayer, player]);
+
+  }, [idPlayer, player])
+  
 
   useEffect(() => {
     let interval = null;
 
     interval = setInterval(() => {
       if (!isRun) {
-        return;
+        return
       }
       if (timeGame > 0) {
         setTimeGame((prev) => prev - 1);
-        setTimeGameToMinute(useSecondsToString(timeGame - 1));
+        setTimeGameToMinute(useSecondsToString(timeGame - 1))
       } else {
         setBankActualPlayer((prev) => prev - 1);
-        setTimeBankToMinute(useSecondsToString(bankActualPlayer));
+        setTimeBankToMinute(useSecondsToString(bankActualPlayer))
       }
       if (bankActualPlayer <= 0 && timeGame <= 0) {
         hanldeClickNextTurn();
       }
     }, 1000);
-
+    
     return () => clearInterval(interval);
-  }, [
-    timeGame,
-    isRun,
-    idPlayer,
-    bankActualPlayer,
-    player,
-    idP,
-    timeGameToMinute,
-    timeBankToMinute,
-  ]);
+  }, [timeGame, isRun, idPlayer, bankActualPlayer, player, idP, timeGameToMinute, timeBankToMinute]);
 
   const handleClickStart = () => {
     setIsRun(!isRun);
@@ -68,33 +59,37 @@ const Timer = ({ initialTime, players }) => {
 
   const handleClickComebackTurn = () => {
     setIsRun(true);
+    setIsButtonsDisable(true);
     setIdPlayer(passedTurnIdPlayer);
     setTimeGame(passedTurnTime);
     setTimeGameToMinute(useSecondsToString(passedTurnTime));
     setIsComebackDisable(true);
   };
 
+  const handleClickButtonsDisable = () => {
+    setIsButtonsDisable(!isButtonsDisable);
+  };
+
   const hanldeClickReset = () => {
     let id = idPlayer;
-    setTimeGame(initialTime);
-    setTimeGameToMinute(useSecondsToString(initialTime));
+    setIsButtonsDisable(true);
+    setVariablesTimeGameToInicial();
     setBankActualPlayer(player[id].timerBank);
-    setTimeBankToMinute(useSecondsToString(player[id].timerBank));
+    setTimeBankToMinute(useSecondsToString(player[id].timerBank))
     setIsRun(true);
   };
   const hanldeClickNextTurn = () => {
-    if (!isRun) {
+    if (!isRun || (timeGame > initialTime-1)) {
       setIsRun(true);
-      return;
+      return
     }
     // Almacena informacion para handleClickComebackTurn
-    setPassedTurnIdPlayer(idPlayer);
-    setPassedTurnTime(timeGame);
-    setIsComebackDisable(false);
+    setVariablesPassedTurn();
+    // Reinicia timer de turno
+    setVariablesTimeGameToInicial();
+    // Bloquea los botones
+    setIsButtonsDisable(true);
 
-    setTimeGame(initialTime);
-
-    setTimeGameToMinute(useSecondsToString(initialTime));
     let id = idPlayer;
 
     if (!isFirstTurn) {
@@ -106,7 +101,6 @@ const Timer = ({ initialTime, players }) => {
     } else {
       if (idP.current === idPlayer && !isComeback) {
         if (!isComeback) {
-          console.log("isComeback ::" + isComeback);
           id = idPlayer;
           setIsComeback(true);
         }
@@ -125,7 +119,7 @@ const Timer = ({ initialTime, players }) => {
     updateBankPlayer(idPlayer, bankActualPlayer);
     setIdPlayer(id);
     setBankActualPlayer(player[id].timerBank);
-    setTimeBankToMinute(useSecondsToString(bankActualPlayer));
+    setTimeBankToMinute(useSecondsToString(bankActualPlayer))
   };
 
   const updateBankPlayer = (playerId, bankAP) => {
@@ -141,6 +135,18 @@ const Timer = ({ initialTime, players }) => {
     setPlayer(newBankTimePlayer);
   };
 
+  const setVariablesPassedTurn = () => {
+  // const setVariablesPassedTurn = (timeGame) => {
+    setPassedTurnIdPlayer(idPlayer);
+    setPassedTurnTime(timeGame);
+    setIsComebackDisable(false);
+  };
+  
+  const setVariablesTimeGameToInicial = () => {
+    setTimeGame(initialTime);
+    setTimeGameToMinute(useSecondsToString(initialTime));
+  };
+
   return (
     <div className="containerStartGame">
       <motion.button
@@ -150,10 +156,22 @@ const Timer = ({ initialTime, players }) => {
       >
         <div
           className="timer"
-          style={{ backgroundColor: player[idPlayer].color }}
+          style={{ backgroundColor: player[idPlayer].color,
+            height : 'auto'
+          }}
         >
-          <span>{timeGameToMinute}</span>
-          <span>{timeBankToMinute}</span>
+          <span 
+            style={
+              timeGame > 0 ? { fontSize : "6rem", fontFamily: "'Inconsolata', monospace", fontWeight: 900, transition: "font-size 0.15s ease-in-out"}:
+              { fontSize : "4rem", fontFamily: "'Inconsolata', monospace", fontWeight: 900, transition: "font-size 1s ease-in-out"}
+            }>{timeGameToMinute}
+          </span> 
+          <span 
+            style={
+              timeGame > 0 ? { fontSize : "4rem", fontFamily: "'Inconsolata', monospace", fontWeight: 900, transition: "font-size 0.15s ease-in-out"}:
+              { fontSize : "6rem", fontFamily: "'Inconsolata', monospace", fontWeight: 900, transition: "font-size 1s ease-in-out"}
+            }>{timeBankToMinute}
+          </span>
         </div>
         <Players
           players={player}
@@ -162,14 +180,36 @@ const Timer = ({ initialTime, players }) => {
         />
       </motion.button>
       <div className="buttonsGame">
-        <button onClick={handleClickStart}>{isRun ? "Pause" : "Start"}</button>
-        <button onClick={hanldeClickReset}>Reset</button>
+        <button
+          onClick={handleClickStart}
+          style={{width: '5rem', height: '3rem', display: 'flex', justifyContent: 'center', alignItems: 'center' }}
+        >
+          {isRun ?
+          <img style={{ width: '5rem', height: '5rem' }} src="./public/buttonPause.svg" alt="Pause" />
+          : <img style={{ width: '5rem', height: '5rem' }} src="./public/buttonPlay.svg" alt="Play" />}
+        </button>
+        <button 
+          onClick={hanldeClickReset}
+          disabled={isButtonsDisable}
+          style={(isButtonsDisable) ? { opacity: 0.25,  width: '5rem', height: '3rem', display: 'flex', justifyContent: 'center', alignItems: 'center' } : { width: '5rem', height: '3rem', display: 'flex', justifyContent: 'center', alignItems: 'center' }}
+        >
+          <img style={{ width: '5rem', height: '5rem' }} src="./public/buttonReset.svg" alt="Reset" />
+          </button>
         <button
           onClick={handleClickComebackTurn}
-          disabled={isComebackDisable}
-          style={!isComebackDisable ? {} : { opacity: 0.25 }}
+          disabled={isComebackDisable || isButtonsDisable}
+          style={(isComebackDisable || isButtonsDisable) ? { opacity: 0.25, width: '5rem', height: '3rem', display: 'flex', justifyContent: 'center', alignItems: 'center' } : {width: '5rem', height: '3rem', display: 'flex', justifyContent: 'center', alignItems: 'center'}}
         >
-          Previous Turn
+          <img style={{ width: '5rem', height: '5rem' }} src="./public/buttonComebackTurn.svg" alt="Previous Turn" />
+        </button>
+        <button
+          onClick={handleClickButtonsDisable}
+          style={{width: '5rem', height: '3rem', display: 'flex', justifyContent: 'center', alignItems: 'center' }}
+        >
+          { isButtonsDisable ?
+          <img style={{ width: '5rem', height: '5rem' }} src="./public/buttonUnlock.svg" alt="Unlocked" />
+          :<img style={{ width: '5rem', height: '5rem' }} src="./public/buttonLock.svg" alt="Locked" />
+        }
         </button>
       </div>
     </div>

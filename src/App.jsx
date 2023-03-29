@@ -8,22 +8,55 @@ import { Players } from "./components/Players";
 
 function App() {
   const [players, setPlayers] = useState([]);
-  const [color, setColor] = useState();
+  const [color, setColor] = useState(null);
   const [time, setTime] = useState();
   const [renderPlayer, setRenderPlayer] = useState(false);
   const [minutesGame, setMinutesGame] = useState(0);
   const [secondsGame, setSecondsGame] = useState(0);
-  const [deleteColor, setDeleteColor] = useState(false);
+  const [isDeleteColor, setIsDeleteColor] = useState(false);
+  const [isFirstInput, setIsFirstInput] = useState(true);
+  const [errorSelectColor, setErrorSelectColor] = useState();
+  const [errorNotPlayers, setErrorNotPlayers] = useState(false);
+ 
+  
+
+
   const minute = useRef();
   const second = useRef();
   const nameInput = useRef();
   let id = useRef(-1);
 
+
+  useEffect(() => {
+    if (isFirstInput) {
+      setIsFirstInput(color === null) 
+      
+      return;
+    }
+
+    if(players.length === 6){
+      setErrorSelectColor('')
+      return
+    }
+    if (color === null  ) {
+      setErrorSelectColor("Elija un color");
+    } else {
+      setErrorSelectColor("");
+    }
+    setTimeout(() => {
+      setErrorSelectColor('')
+    }, 3000);
+
+  }, [color, isFirstInput, players]);
+
   const handleChangeColor = (color) => {
     setColor(color);
   };
   const handleClickStartGame = () => {
-    setRenderPlayer(true);
+    if(players.length >= 2){
+      setRenderPlayer(true);
+    }
+    setErrorNotPlayers(true)
   };
   const handleChangeTimeSecond = (e) => {
     const sec = e.target.value;
@@ -46,17 +79,24 @@ function App() {
     const seconds =
       second.current.value === "" ? 0 : parseInt(second.current.value);
     const timeBank = useMinuteToSecond(minutes, seconds);
-    setPlayers([
-      ...players,
-      {
-        id: id.current,
-        name: nameInput.current.value,
-        color: color,
-        timerBank: timeBank,
-        isActive: false,
-      },
-    ]);
-    setDeleteColor(!deleteColor);
+
+    if(!isFirstInput && color !== null && !errorSelectColor){   
+      setPlayers([
+        ...players,
+        {
+          id: id.current,
+          name: nameInput.current.value,
+          color: color,
+          timerBank: timeBank,
+          isActive: false,
+        },
+      ]);
+      setIsDeleteColor(!isDeleteColor);
+      setColor(null);
+    }else{
+      setIsFirstInput(false)
+
+    }
   };
 
   return renderPlayer ? (
@@ -97,11 +137,18 @@ function App() {
         </form>
         <div className="containerPlayers">
           <form className="containerAddPlayer" onSubmit={handleAddPlayer}>
-            <div style={{ display: "flex" }}>
+            <div
+              style={
+                !errorSelectColor
+                  ? { display: "flex", marginBottom: "16px" }
+                  : { display: "flex" }
+              }
+            >
               <SelectColor
                 color={handleChangeColor}
-                deleteColor={deleteColor}
+                isDeleteColor={isDeleteColor}
               />
+
               <input
                 placeholder="Nombre"
                 type="text"
@@ -109,7 +156,17 @@ function App() {
                 ref={nameInput}
               />
             </div>
-
+            {errorSelectColor ? (
+              <p
+                style={{
+                  color: "red",
+                  fontSize: "0.8rem",
+                  textAlign: "initial",
+                }}
+              >
+                {errorSelectColor}
+              </p>
+            ) : null}
             <div className="containerMinutesGame">
               <h2>Banco de tiempo:</h2>
               <label htmlFor="minutes">
@@ -138,7 +195,7 @@ function App() {
             </div>
             <button style={{ width: "100%", height: "4rem" }}>+</button>
           </form>
-          <Players players={players} />
+          <Players players={players} errorNotPlayers={errorNotPlayers} />
         </div>
       </div>
       <button

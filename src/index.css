@@ -65,6 +65,9 @@ input, option, select, button{
   background-color: var(--second-color);
   margin: 2px;
 }
+select{
+  margin-left: 0;
+}
 input:focus{
   border: 2px solid var(--text-color);
   outline: none;
