@@ -5,12 +5,14 @@ import SelectColor from "./components/SelectColor";
 import Timer from "./components/Timer";
 import { useMinuteToSecond } from "./hooks/useSecondToMinute";
 import { Players } from "./components/Players";
+import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 
 function App() {
   const [players, setPlayers] = useState([]);
   const [color, setColor] = useState(null);
   const [time, setTime] = useState();
   const [renderPlayer, setRenderPlayer] = useState(false);
+  const [name, setName] = useState()
   const [minutesGame, setMinutesGame] = useState(0);
   const [secondsGame, setSecondsGame] = useState(0);
   const [isDeleteColor, setIsDeleteColor] = useState(false);
@@ -18,14 +20,11 @@ function App() {
   const [errorSelectColor, setErrorSelectColor] = useState();
   const [errorNotPlayers, setErrorNotPlayers] = useState(false);
  
-  
-
 
   const minute = useRef();
   const second = useRef();
-  const nameInput = useRef();
-  let id = useRef(-1);
 
+  let id = useRef(-1);
 
   useEffect(() => {
     if (isFirstInput) {
@@ -66,6 +65,10 @@ function App() {
     const min = e.target.value;
     setMinutesGame(min);
   };
+  const handleChangeName = (e) =>{
+    const name = e.target.value;
+    setName(name)
+  }
 
   useEffect(() => {
     setTime(useMinuteToSecond(minutesGame, secondsGame));
@@ -85,7 +88,7 @@ function App() {
         ...players,
         {
           id: id.current,
-          name: nameInput.current.value,
+          name,
           color: color,
           timerBank: timeBank,
           isActive: false,
@@ -97,6 +100,7 @@ function App() {
       setIsFirstInput(false)
 
     }
+    setName('')
   };
 
   return renderPlayer ? (
@@ -153,7 +157,8 @@ function App() {
                 placeholder="Nombre"
                 type="text"
                 id="name"
-                ref={nameInput}
+                value={name}
+                onChange={handleChangeName}
               />
             </div>
             {errorSelectColor ? (
