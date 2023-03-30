@@ -1,6 +1,5 @@
 export const styleButtonsTimer = (isButtonsDisable) => {
-  return !isButtonsDisable ?
-  { buttonStyle } : {...buttonStyle, opacity: 0.25};
+  return !isButtonsDisable ? buttonStyle : {...buttonStyle, opacity: 0.25};  
 };
 
 const buttonStyle = {
@@ -8,5 +7,6 @@ const buttonStyle = {
   height: '3rem',
   display: 'flex',
   justifyContent: 'center',
-  alignItems: 'center'
+  alignItems: 'center',
+  gap: '5rem'
 };

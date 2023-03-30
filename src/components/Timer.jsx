@@ -79,11 +79,21 @@ const Timer = ({ initialTime, players }) => {
     setTimeBankToMinute(useSecondsToString(player[id].timerBank))
     setIsRun(true);
   };
+
   const hanldeClickNextTurn = () => {
-    if (!isRun || (timeGame > initialTime-1)) {
+    if (!isRun) {
       setIsRun(true);
       return
     }
+
+    let notPassTurn = false;
+    let segPrev = 1;
+    notPassTurn = !notPassTurn ? (timeGame > (initialTime-segPrev) && initialTime != 0) : notPassTurn;
+    notPassTurn = !notPassTurn && initialTime === 0 ? (bankActualPlayer > (player[idPlayer]?.timerBank-segPrev) && player[idPlayer]?.timerBank != 0) : notPassTurn;
+    if (notPassTurn) {
+      return
+    }
+
     // Almacena informacion para handleClickComebackTurn
     setVariablesPassedTurn();
     // Reinicia timer de turno
@@ -183,7 +193,7 @@ const Timer = ({ initialTime, players }) => {
       <div className="buttonsGame">
         <button
           onClick={handleClickStart}
-          style={{width: '5rem', height: '3rem', display: 'flex', justifyContent: 'center', alignItems: 'center' }}
+          style={styleButtonsTimer()}
         >
           {isRun ?
           <img style={{ width: '5rem', height: '5rem' }} src="./public/buttonPause.svg" alt="Pause" />
@@ -195,17 +205,17 @@ const Timer = ({ initialTime, players }) => {
           style={styleButtonsTimer(isButtonsDisable)}
         >
           <img style={{ width: '5rem', height: '5rem' }} src="./public/buttonReset.svg" alt="Reset" />
-          </button>
+        </button>
         <button
           onClick={handleClickComebackTurn}
           disabled={isComebackDisable || isButtonsDisable}
-          style={(isComebackDisable || isButtonsDisable) ? { opacity: 0.25, width: '5rem', height: '3rem', display: 'flex', justifyContent: 'center', alignItems: 'center' } : {width: '5rem', height: '3rem', display: 'flex', justifyContent: 'center', alignItems: 'center'}}
+          style={styleButtonsTimer((isComebackDisable || isButtonsDisable))}
         >
           <img style={{ width: '5rem', height: '5rem' }} src="./public/buttonComebackTurn.svg" alt="Previous Turn" />
         </button>
         <button
           onClick={handleClickButtonsDisable}
-          style={{width: '5rem', height: '3rem', display: 'flex', justifyContent: 'center', alignItems: 'center' }}
+          style={styleButtonsTimer()}
         >
           { isButtonsDisable ?
           <img style={{ width: '5rem', height: '5rem' }} src="./public/buttonUnlock.svg" alt="Unlocked" />
