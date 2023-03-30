@@ -50,7 +50,6 @@ select{
   display: grid;
   list-style: none;
   grid-template-columns: repeat(auto-fill, minmax(200px,1fr));
-  gap: 0.8rem;
   width: 100%;
   margin: 0;
   padding: 0;
@@ -67,6 +66,8 @@ select{
   justify-content: center;
   width: 100%;
   border-radius: 10px;
+
+  
 }
 .game{
   display: flex;
@@ -95,6 +96,7 @@ input#name{
 .player{
   display: flex;
   flex-direction: column;
+  padding: 0.3rem;
 }
 .player span, p{
   text-align: center;

@@ -6,6 +6,7 @@ import Timer from "./components/Timer";
 import { useMinuteToSecond } from "./hooks/useSecondToMinute";
 import { Players } from "./components/Players";
 
+
 function App() {
   const [players, setPlayers] = useState([]);
   const [color, setColor] = useState(null);
@@ -18,7 +19,6 @@ function App() {
   const [errorSelectColor, setErrorSelectColor] = useState();
   const [errorNotPlayers, setErrorNotPlayers] = useState(false);
  
-  
 
 
   const minute = useRef();
@@ -28,6 +28,10 @@ function App() {
 
 
   useEffect(() => {
+    players.forEach(function(player, index) {
+      player.id = index ;
+    });
+
     if (isFirstInput) {
       setIsFirstInput(color === null) 
       
@@ -99,8 +103,9 @@ function App() {
     }
   };
 
+
   return renderPlayer ? (
-    <Timer initialTime={time} players={players} />
+    <Timer initialTime={time} players={players} renderPlayer={renderPlayer} />
   ) : (
     <div className="App">
       <div>
@@ -195,7 +200,7 @@ function App() {
             </div>
             <button style={{ width: "100%", height: "4rem" }}>+</button>
           </form>
-          <Players players={players} errorNotPlayers={errorNotPlayers} />
+          <Players players={players} errorNotPlayers={errorNotPlayers} setPlayers={setPlayers}/>
         </div>
       </div>
       <button
@@ -204,6 +209,7 @@ function App() {
       >
         Empezar juego
       </button>
+
     </div>
   );
 }

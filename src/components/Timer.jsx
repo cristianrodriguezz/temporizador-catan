@@ -3,7 +3,7 @@ import { Players } from "./Players";
 import { useSecondsToString } from "../hooks/useSecondToMinute";
 import { motion } from "framer-motion";
 
-const Timer = ({ initialTime, players }) => {
+const Timer = ({ initialTime, players, renderPlayer }) => {
   const [timeGame, setTimeGame] = useState(initialTime);
   const [player, setPlayer] = useState(players);
   const [isRun, setIsRun] = useState(false);
@@ -177,6 +177,7 @@ const Timer = ({ initialTime, players }) => {
           players={player}
           playerId={idPlayer}
           timeBankToMinute={timeBankToMinute}
+          renderPlayer={renderPlayer}
         />
       </motion.button>
       <div className="buttonsGame">
