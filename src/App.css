@@ -108,6 +108,7 @@ input#name{
   justify-content: space-between;
   height: 95%;
   align-items: center;
+  overscroll-behavior: none;
 }
 
 @media only screen and (max-width: 767px){
