@@ -26,6 +26,13 @@ function App() {
   const nameInput = useRef();
   let id = useRef(-1);
 
+  const handleTouchStart = (event) => {
+    if (event.touches.length > 1) {
+      return;
+    }
+    event.preventDefault();
+  };
+
 
   useEffect(() => {
     players.forEach(function(player, index) {
@@ -107,7 +114,7 @@ function App() {
   return renderPlayer ? (
     <Timer initialTime={time} players={players} renderPlayer={renderPlayer} />
   ) : (
-    <div className="App">
+    <div className="App" onTouchStart={handleTouchStart}>
       <div>
         <h1>Temporizador</h1>
         <form className="containerTimeGame">
