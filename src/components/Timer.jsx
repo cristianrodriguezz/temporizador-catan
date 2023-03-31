@@ -22,6 +22,29 @@ const Timer = ({ initialTime, players, renderPlayer }) => {
   const [isComebackDisable, setIsComebackDisable] = useState(true)
   
   const [isButtonsDisable, setIsButtonsDisable] = useState(true)
+
+
+  useEffect(() => {
+    function preventPullToRefresh(event) {
+      // Si el usuario está desplazándose hacia abajo, evita que se active Pull-to-refresh
+      if (event.touches.length > 1) return;
+      const firstTouch = event.touches[0];
+      const scrollY = window.pageYOffset || document.body.scrollTop || document.documentElement.scrollTop;
+      const touchY = firstTouch.pageY - scrollY;
+
+      if (touchY < 0) return;
+      if (touchY < 50 && scrollY === 0) {
+        event.preventDefault();
+      }
+    }
+
+    window.addEventListener('touchmove', preventPullToRefresh, { passive: false });
+
+    return () => {
+      window.removeEventListener('touchmove', preventPullToRefresh);
+    };
+  }, []);
+
   
   const handleTouchStart = (event) => {
     if (event.touches.length > 1) {
