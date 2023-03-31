@@ -19,39 +19,10 @@ function App() {
   const [errorSelectColor, setErrorSelectColor] = useState();
   const [errorNotPlayers, setErrorNotPlayers] = useState(false);
  
-
-
   const minute = useRef();
   const second = useRef();
   const nameInput = useRef();
   let id = useRef(-1);
-
-
-
-  useEffect(() => {
-    function preventPullToRefresh(event) {
-      // Si el usuario está desplazándose hacia abajo, evita que se active Pull-to-refresh
-      if (event.touches.length > 1) return;
-      const firstTouch = event.touches[0];
-      const scrollY = window.pageYOffset || document.body.scrollTop || document.documentElement.scrollTop;
-      const touchY = firstTouch.pageY - scrollY;
-
-      if (touchY < 0) return;
-      if (touchY < 50 && scrollY === 0) {
-        event.preventDefault();
-      }
-    }
-
-    window.addEventListener('touchmove', preventPullToRefresh, { passive: false });
-
-    return () => {
-      window.removeEventListener('touchmove', preventPullToRefresh);
-    };
-  }, []);
-
-
-
-
 
   const handleTouchStart = (event) => {
     if (event.touches.length > 1) {
@@ -141,7 +112,7 @@ function App() {
   return renderPlayer ? (
     <Timer initialTime={time} players={players} renderPlayer={renderPlayer} />
   ) : (
-    <div className="App" onTouchStart={handleTouchStart}>
+    <div className="App">
       <div>
         <h1>Temporizador</h1>
         <form className="containerTimeGame">

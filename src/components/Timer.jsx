@@ -23,16 +23,6 @@ const Timer = ({ initialTime, players, renderPlayer }) => {
   
   const [isButtonsDisable, setIsButtonsDisable] = useState(true)
 
-
-
-  
-  const handleTouchStart = (event) => {
-    if (event.touches.length > 1) {
-      return;
-    }
-    event.preventDefault();
-  };
-
   useEffect(() => {
 
     setBankActualPlayer(player[idPlayer]?.timerBank)
@@ -168,7 +158,7 @@ const Timer = ({ initialTime, players, renderPlayer }) => {
   };
 
   return (
-    <div className="containerStartGame" onTouchStart={handleTouchStart}>
+    <div className="containerStartGame">
       <motion.button
         whileTap={{ scale: 0.99 }}
         className="game"

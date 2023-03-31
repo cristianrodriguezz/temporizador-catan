@@ -1,3 +1,6 @@
+html, body {
+  overscroll-behavior: none;
+}
 
 .timerPlayer{
   width: 200px;
