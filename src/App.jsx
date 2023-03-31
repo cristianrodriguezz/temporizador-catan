@@ -127,7 +127,7 @@ function App() {
                 min="0"
                 max="59"
                 className="inputTimeGame"
-                placeholder="00"
+                placeholder="0"
               ></input>
             </label>
             <span>:</span>
@@ -181,7 +181,7 @@ function App() {
               <h2>Banco de tiempo:</h2>
               <label htmlFor="minutes">
                 <input
-                  placeholder="00"
+                  placeholder="0"
                   type="number"
                   id="minutes"
                   name="minutes"

@@ -13,7 +13,6 @@ const PlayersList = ({
   setPlayers,
   renderPlayer,
 }) => {
-  const [playersReorder, setPlayersReorder] = useState();
   const handleDragEnd = (result) => {
     if (!result.destination) return;
     const newItems = [...players];
