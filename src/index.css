@@ -14,13 +14,13 @@
   box-sizing: border-box;
 }
 html{
-  height: 100%;
+  height: auto;
 }
 body{
   height: 100%;
   margin: 0;
   background-color: var(--principal-color);
-  height: 100%;
+  height: auto;
 }
 #root{
   height: 100%;
