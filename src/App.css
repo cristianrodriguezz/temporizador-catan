@@ -84,6 +84,7 @@ select{
   align-items: center;
   margin-top: 10px;
   margin-bottom: 10px;
+  gap: 10px;
 }
 .containerPlayers{
   display: flex;
