@@ -1,24 +1,35 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
+import { Context } from "../Contexts/ContextProvider";
+import { colors } from "../constants/color";
 
 const SelectColor = ({ color, isDeleteColor }) => {
-  const [options, setOptions] = useState([
-    { id: 1, value: "red", label: "Red" },
-    { id: 2, value: "green", label: "Green" },
-    { id: 3, value: "blue", label: "Blue" },
-    { id: 4, value: "#ffffff97", label: "White" },
-    { id: 5, value: "orange", label: "Orange" },
-    { id: 6, value: "#78270e", label: "Brown" },
-  ]);
+  const [options, setOptions] = useState(colors);
   const [optionSelected, setOptionSelected] = useState();
   const colorInput = useRef();
+  const { colorsDeletes, setColorsDeletes } = useContext(Context);
 
 
   useEffect(() => {
+
     const updatedOptions = options.filter(
       (option) => option.value !== optionSelected
     );
     setOptions(updatedOptions);
+
   }, [isDeleteColor]);
+
+  useEffect(() => {
+        
+    if (colorsDeletes) {
+
+      const addColor = colorsDeletes[0];
+      setOptions([...options, addColor]);
+
+    }
+    setColorsDeletes(false)
+  
+  }, [colorsDeletes])
+  
 
   const handleSelectChange = (e) => {
     let selectColor = e.target.value;
@@ -27,7 +38,11 @@ const SelectColor = ({ color, isDeleteColor }) => {
   };
 
   return (
-    <select defaultValue={"DEFAULT"} ref={colorInput} onChange={handleSelectChange}>
+    <select
+      defaultValue={"DEFAULT"}
+      ref={colorInput}
+      onChange={handleSelectChange}
+    >
       <option value={"DEFAULT"}>Select color</option>
       {options.map((option) => (
         <option

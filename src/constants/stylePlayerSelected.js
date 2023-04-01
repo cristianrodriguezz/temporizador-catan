@@ -13,7 +13,7 @@ export const stylePlayerSelected = (player, playerId, renderPlayerInTimer) => {
         borderRadius: "10px",
         margin: "5px",
         display: "grid",
-        gridTemplateColumns: "80% 20%",
+        gridTemplateColumns: "10% 70% 20%",
       }
     : {
         background: player.color,
