@@ -1,6 +1,8 @@
-html, body {
+body , html{
   overscroll-behavior: none;
+  -webkit-overscroll-behavior: none; /* prefijo del vendedor para navegadores WebKit */
 }
+
 
 .timerPlayer{
   width: 200px;
