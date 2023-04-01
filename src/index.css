@@ -15,12 +15,16 @@
 }
 html{
   height: auto;
+  overscroll-behavior: none;
+  -webkit-overscroll-behavior: none; /* prefijo del vendedor para navegadores WebKit */
 }
 body{
   height: 100%;
   margin: 0;
   background-color: var(--principal-color);
   height: auto;
+  overscroll-behavior: none;
+  -webkit-overscroll-behavior: none; /* prefijo del vendedor para navegadores WebKit */
 }
 #root{
   height: 100%;
