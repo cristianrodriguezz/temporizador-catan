@@ -3,7 +3,11 @@ import { Players } from "./Players";
 import { useSecondsToString } from "../hooks/useSecondToMinute";
 import { styleButtonsTimer } from "../constants/styleButtonsTimer";
 import { motion } from "framer-motion";
-import soundFinishTime from "../assets/soundFinishTime.wav"
+import soundFinishTime11 from "../assets/soundFinishTime1.wav"
+import soundFinishTime12 from "../assets/soundFinishTime2.wav"
+import soundFinishTimeGame1 from "../assets/soundFinishTimeGame1.wav"
+import soundFinishTimeGame2 from "../assets/soundFinishTimeGame2.wav"
+import soundPassTurn2 from "../assets/soundPassTurn2.wav"
 
 const Timer = ({ initialTime, players, isStartGame }) => {
     const [timeGame, setTimeGame] = useState(initialTime);
@@ -45,13 +49,15 @@ const Timer = ({ initialTime, players, isStartGame }) => {
             if (timeGame > 0) {
                 setTimeGame((prev) => prev - 1);
                 setTimeGameToMinute(useSecondsToString(timeGame - 1));
+                if (timeGame === 1) 
+                  play(soundFinishTimeGame2);
             } else {
                 setBankActualPlayer((prev) => prev - 1);
                 setTimeBankToMinute(useSecondsToString(bankActualPlayer));
             }
             if (bankActualPlayer <= 0 && timeGame <= 0) {
               hanldeClickNextTurn();
-              play(soundFinishTime);
+              play(soundFinishTime12);
             }
         }, 1000);
 
@@ -121,6 +127,8 @@ const Timer = ({ initialTime, players, isStartGame }) => {
         setIsButtonsDisable(true);
 
         let id = idPlayer;
+        if (!(bankActualPlayer <= 0 && timeGame <= 0))
+          play(soundPassTurn2);
 
         if (!isFirstTurn) {
             if (idP.current === idPlayer) {
