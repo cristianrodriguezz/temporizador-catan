@@ -1,3 +1,7 @@
+.html{
+  overscroll-behavior: none
+}
+
 .timerPlayer{
   width: 200px;
   background-color: rgb(18 31 43);
