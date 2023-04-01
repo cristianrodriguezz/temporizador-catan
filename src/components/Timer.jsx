@@ -106,7 +106,7 @@ const Timer = ({ initialTime, players, isStartGame }) => {
 
     const hanldeClickNextTurn = () => {
         if (!isRun) {
-            setIsRun(true);
+            handleClickStart();
             return;
         }
 
