@@ -49,7 +49,7 @@ const Timer = ({ initialTime, players, isStartGame }) => {
             if (timeGame > 0) {
                 setTimeGame((prev) => prev - 1);
                 setTimeGameToMinute(useSecondsToString(timeGame - 1));
-                if (timeGame === 1) 
+                if (timeGame === 1 && bankActualPlayer != 0) 
                   play(soundFinishTimeGame2);
             } else {
                 setBankActualPlayer((prev) => prev - 1);
