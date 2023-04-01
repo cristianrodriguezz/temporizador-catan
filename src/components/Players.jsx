@@ -61,7 +61,8 @@ const PlayersList = ({
                 : null
             }
           >
-            {players?.map((player, index) => (
+            {players?.map((player
+            , index) => (
               <Draggable
                 key={player.id}
                 draggableId={player.id.toString()}
