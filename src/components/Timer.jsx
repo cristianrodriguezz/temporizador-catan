@@ -3,6 +3,7 @@ import { Players } from "./Players";
 import { useSecondsToString } from "../hooks/useSecondToMinute";
 import { styleButtonsTimer } from "../constants/styleButtonsTimer";
 import { motion } from "framer-motion";
+import soundFinishTime from "../assets/soundFinishTime.wav"
 
 const Timer = ({ initialTime, players, isStartGame }) => {
     const [timeGame, setTimeGame] = useState(initialTime);
@@ -49,7 +50,8 @@ const Timer = ({ initialTime, players, isStartGame }) => {
                 setTimeBankToMinute(useSecondsToString(bankActualPlayer));
             }
             if (bankActualPlayer <= 0 && timeGame <= 0) {
-                hanldeClickNextTurn();
+              hanldeClickNextTurn();
+              play(soundFinishTime);
             }
         }, 1000);
 
@@ -173,6 +175,10 @@ const Timer = ({ initialTime, players, isStartGame }) => {
     const setVariablesTimeGameToInicial = () => {
         setTimeGame(initialTime);
         setTimeGameToMinute(useSecondsToString(initialTime));
+    };
+
+    const play = (sound) => {
+      new Audio(sound).play();
     };
 
     return (
