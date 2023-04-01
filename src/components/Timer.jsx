@@ -3,7 +3,7 @@ import { Players } from "./Players";
 import { useSecondsToString } from "../hooks/useSecondToMinute";
 import { motion } from "framer-motion";
 
-const Timer = ({ initialTime, players, renderPlayer }) => {
+const Timer = ({ initialTime, players, renderPlayer, setRenderPlayer }) => {
   const [timeGame, setTimeGame] = useState(initialTime);
   const [player, setPlayer] = useState(players);
   const [isRun, setIsRun] = useState(false);
@@ -212,6 +212,7 @@ const Timer = ({ initialTime, players, renderPlayer }) => {
           :<img style={{ width: '5rem', height: '5rem' }} src="./public/buttonLock.svg" alt="Locked" />
         }
         </button>
+        <button onClick={() => setRenderPlayer(false)}>Volver</button>
       </div>
     </div>
   );

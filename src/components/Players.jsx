@@ -1,10 +1,12 @@
-import React from "react";
+import React, { useContext } from "react";
 import { useSecondsToString } from "../hooks/useSecondToMinute";
 import { stylePlayerSelected } from "../constants/stylePlayerSelected";
-import { motion } from "framer-motion";
-import { useState } from "react";
+import { AnimatePresence, motion } from "framer-motion";
+import { useState, useEffect } from "react";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 import IconGripper from "../icons/IconGripper";
+import { Context } from "../Contexts/ContextProvider";
+import { colors } from "../constants/color";
 
 const PlayersList = ({
   players,
@@ -13,7 +15,9 @@ const PlayersList = ({
   setPlayers,
   renderPlayer,
 }) => {
-  const [playersReorder, setPlayersReorder] = useState();
+  const [renderPlayerToDelete, setRenderPlayerToDelete] = useState(true);
+  const { colorsDeletes, setColorsDeletes } = useContext(Context);
+
   const handleDragEnd = (result) => {
     if (!result.destination) return;
     const newItems = [...players];
@@ -21,7 +25,25 @@ const PlayersList = ({
     newItems.splice(result.destination.index, 0, reorderedItem);
     setPlayers(newItems);
   };
-  console.log(renderPlayer);
+  const handleClickDeletePlayer = (idPlayer) => {
+    const playerList = players;
+    const playerDelete = playerList.filter((player) => player.id === idPlayer);
+    playerList.splice(idPlayer, 1);
+    
+    playerList.forEach(function (player, index) {
+      player.id = index;
+    });
+
+    const colorDelete = colors.filter(
+      (color) => playerDelete[0].color === color.value
+    );
+
+    setColorsDeletes(colorDelete);
+
+    setPlayers(playerList);
+    setRenderPlayerToDelete(!renderPlayerToDelete);
+  };
+  useEffect(() => {}, [renderPlayerToDelete]);
 
   return (
     <DragDropContext onDragEnd={handleDragEnd}>
@@ -51,34 +73,49 @@ const PlayersList = ({
                     {...draggableProvided.draggableProps}
                     ref={draggableProvided.innerRef}
                   >
-                    <motion.div
-                      initial={{ scale: 0 }}
-                      animate={{ scale: 1 }}
-                      transition={{
-                        type: "spring",
-                        stiffness: 260,
-                        damping: 20,
-                      }}
-                      className="player"
-                      style={stylePlayerSelected(player, playerId, renderPlayer)}
-                    >
-                      <div>
-                        <p style={{ fontSize: "2rem" }}>
-                          {playerId === player.id
-                            ? timeBankToMinute
-                            : useSecondsToString(player.timerBank)}
-                        </p>
-                        <p>{player.name}</p>
-                      </div>
-                      {renderPlayer ? null : (
-                        <div
-                          style={{ display: "grid", placeItems: "center" }}
-                          {...draggableProvided.dragHandleProps}
-                        >
-                          <IconGripper />
+                    <AnimatePresence>
+                      <motion.div
+                        initial={{ scale: 0 }}
+                        animate={{ scale: 1 }}
+                        exit={{ scale: 0 }}
+                        className="player"
+                        style={stylePlayerSelected(
+                          player,
+                          playerId,
+                          renderPlayer
+                        )}
+                      >
+                        {renderPlayer ? null : (
+                          <div
+                            style={{ display: "grid", placeItems: "center" }}
+                          >
+                            <button
+                              style={{ background: "none" }}
+                              onClick={() => handleClickDeletePlayer(player.id)}
+                            >
+                              X
+                            </button>
+                          </div>
+                        )}
+
+                        <div>
+                          <p style={{ fontSize: "2rem" }}>
+                            {playerId === player.id
+                              ? timeBankToMinute
+                              : useSecondsToString(player.timerBank)}
+                          </p>
+                          <p>{player.name}</p>
                         </div>
-                      )}
-                    </motion.div>
+                        {renderPlayer ? null : (
+                          <div
+                            style={{ display: "grid", placeItems: "center" }}
+                            {...draggableProvided.dragHandleProps}
+                          >
+                            <IconGripper />
+                          </div>
+                        )}
+                      </motion.div>
+                    </AnimatePresence>
                   </li>
                 )}
               </Draggable>
