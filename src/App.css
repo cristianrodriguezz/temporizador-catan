@@ -1,5 +1,5 @@
-.html{
-  overscroll-behavior: none
+html, body {
+  overscroll-behavior: none;
 }
 
 .timerPlayer{
