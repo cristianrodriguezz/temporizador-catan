@@ -8,6 +8,7 @@ import soundFinishTime12 from "../assets/soundFinishTime2.wav"
 import soundFinishTimeGame1 from "../assets/soundFinishTimeGame1.wav"
 import soundFinishTimeGame2 from "../assets/soundFinishTimeGame2.wav"
 import soundPassTurn2 from "../assets/soundPassTurn2.wav"
+import soundGeneralClick from "../assets/soundGeneralClick.wav"
 
 const Timer = ({ initialTime, players, isStartGame }) => {
     const [timeGame, setTimeGame] = useState(initialTime);
@@ -56,8 +57,8 @@ const Timer = ({ initialTime, players, isStartGame }) => {
                 setTimeBankToMinute(useSecondsToString(bankActualPlayer));
             }
             if (bankActualPlayer <= 0 && timeGame <= 0) {
-              hanldeClickNextTurn();
               play(soundFinishTime12);
+              hanldeClickNextTurn();
             }
         }, 1000);
 
@@ -75,9 +76,11 @@ const Timer = ({ initialTime, players, isStartGame }) => {
 
     const handleClickStart = () => {
         setIsRun(!isRun);
+        play(soundGeneralClick);
     };
 
     const handleClickComebackTurn = () => {
+        play(soundGeneralClick);
         setIsRun(true);
         setIsButtonsDisable(true);
         setIdPlayer(passedTurnIdPlayer);
@@ -87,10 +90,12 @@ const Timer = ({ initialTime, players, isStartGame }) => {
     };
 
     const handleClickButtonsDisable = () => {
+        play(soundGeneralClick);
         setIsButtonsDisable(!isButtonsDisable);
     };
 
     const hanldeClickReset = () => {
+        play(soundGeneralClick);
         let id = idPlayer;
         setIsButtonsDisable(true);
         setVariablesTimeGameToInicial();
