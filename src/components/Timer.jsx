@@ -85,6 +85,12 @@ const Timer = ({ initialTime, players, isStartGame }) => {
         play(soundGeneralClick);
         setIsRun(true);
         setIsButtonsDisable(true);
+        if (idPlayer === passedTurnIdPlayer) {
+            setIsFirstTurn(true);
+            if (idPlayer != 0) {  
+                setIsComeback(false);
+            }
+        }
         setIdPlayer(passedTurnIdPlayer);
         setTimeGame(passedTurnTime);
         setTimeGameToMinute(useSecondsToString(passedTurnTime));
@@ -181,7 +187,6 @@ const Timer = ({ initialTime, players, isStartGame }) => {
     };
 
     const setVariablesPassedTurn = () => {
-        // const setVariablesPassedTurn = (timeGame) => {
         setPassedTurnIdPlayer(idPlayer);
         setPassedTurnTime(timeGame);
         setIsComebackDisable(false);
