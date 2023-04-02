@@ -54,7 +54,7 @@ const PlayersList = ({
             ref={droppableProvided.innerRef}
             className="timerListPlayer"
             style={
-              players.length > 5 && isStartGame
+              players.length > 4 && isStartGame
                 ? {
                     gridTemplateColumns: "repeat(auto-fill, minmax(150px,1fr))",
                   }
