@@ -19,10 +19,11 @@ function App() {
   const [isFirstInput, setIsFirstInput] = useState(true);
   const [errorSelectColor, setErrorSelectColor] = useState();
   const [errorNotPlayers, setErrorNotPlayers] = useState(false);
+  const [name, setName] = useState('');
 
   const minute = useRef();
   const second = useRef();
-  const nameInput = useRef();
+
   let id = useRef(-1);
 
   useEffect(() => {
@@ -67,7 +68,11 @@ function App() {
     const min = e.target.value;
     setMinutesGame(min);
   };
-
+  const handleChangeName = (e) => {
+    const name = e.target.value
+    
+    setName(name)
+  }
   useEffect(() => {
     setTime(useMinuteToSecond(minutesGame, secondsGame));
   }, [minutesGame, secondsGame, players]);
@@ -86,7 +91,7 @@ function App() {
         ...players,
         {
           id: id.current,
-          name: nameInput.current.value,
+          name,
           color: color,
           timerBank: timeBank,
           isActive: false,
@@ -97,14 +102,16 @@ function App() {
     } else {
       setIsFirstInput(false);
     }
+    setName('')
   };
 
   return isStartGame ? (
     <Context.Provider
-    value={{
-      colorsDeletes,
-      setColorsDeletes,
-    }}>
+      value={{
+        colorsDeletes,
+        setColorsDeletes,
+      }}
+    >
       <Timer
         initialTime={time}
         players={players}
@@ -171,7 +178,8 @@ function App() {
                   placeholder="Nombre"
                   type="text"
                   id="name"
-                  ref={nameInput}
+                  onChange={handleChangeName}
+                  value={name}
                 />
               </div>
               {errorSelectColor ? (
