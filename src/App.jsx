@@ -234,6 +234,7 @@ function App() {
         >
           Empezar juego
         </button>
+
       </div>
     </Context.Provider>
   );
