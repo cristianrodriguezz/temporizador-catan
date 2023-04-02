@@ -214,7 +214,7 @@ const Timer = ({ initialTime, players, isStartGame }) => {
                         style={
                             timeGame > 0
                                 ? {
-                                      fontSize: "6rem",
+                                      fontSize: "7rem",
                                       fontFamily: "'Inconsolata', monospace",
                                       fontWeight: 900,
                                       transition: "font-size 0.15s ease-in-out",
@@ -239,7 +239,7 @@ const Timer = ({ initialTime, players, isStartGame }) => {
                                       transition: "font-size 0.15s ease-in-out",
                                   }
                                 : {
-                                      fontSize: "6rem",
+                                      fontSize: "7rem",
                                       fontFamily: "'Inconsolata', monospace",
                                       fontWeight: 900,
                                       transition: "font-size 1s ease-in-out",
