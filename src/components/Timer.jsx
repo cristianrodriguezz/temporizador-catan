@@ -4,7 +4,7 @@ import { useSecondsToString } from "../hooks/useSecondToMinute";
 import { styleButtonsTimer } from "../constants/styleButtonsTimer";
 import { motion } from "framer-motion";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faPlay } from "@fortawesome/free-solid-svg-icons";       
+import { faPlay , faPause, faClockRotateLeft, faBackwardStep,faLockOpen,faLock} from "@fortawesome/free-solid-svg-icons";     
 import soundFinishTime11 from "../assets/soundFinishTime1.wav"
 import soundFinishTime12 from "../assets/soundFinishTime2.wav"
 import soundFinishTimeGame1 from "../assets/soundFinishTimeGame1.wav"
@@ -259,11 +259,7 @@ const Timer = ({ initialTime, players, isStartGame }) => {
             <div className="buttonsGame">
                 <button onClick={handleClickStart} style={styleButtonsTimer()}>
                     {isRun ? (
-                        <img
-                            style={{ width: "5rem", height: "5rem" }}
-                            src="./public/buttonPause.svg"
-                            alt="Pause"
-                        />
+                        <FontAwesomeIcon icon={faPause} style={{color: "#f5f5f5",}} />
                     ) : (
                         <FontAwesomeIcon icon={faPlay} style={{color: "#f5f5f5",}} />
                     )}
@@ -273,11 +269,7 @@ const Timer = ({ initialTime, players, isStartGame }) => {
                     disabled={isButtonsDisable}
                     style={styleButtonsTimer(isButtonsDisable)}
                 >
-                    <img
-                        style={{ width: "5rem", height: "5rem" }}
-                        src="./public/buttonReset.svg"
-                        alt="Reset"
-                    />
+                    <FontAwesomeIcon icon={faClockRotateLeft} style={{color: "#f5f5f5",}} />  
                 </button>
                 <button
                     onClick={handleClickComebackTurn}
@@ -286,29 +278,17 @@ const Timer = ({ initialTime, players, isStartGame }) => {
                         isComebackDisable || isButtonsDisable
                     )}
                 >
-                    <img
-                        style={{ width: "5rem", height: "5rem" }}
-                        src="./public/buttonComebackTurn.svg"
-                        alt="Previous Turn"
-                    />
+                    <FontAwesomeIcon icon={faBackwardStep} style={{color: "#f5f5f5",}} />
                 </button>
                 <button
                     onClick={handleClickButtonsDisable}
                     style={styleButtonsTimer()}
                 >
-                    {isButtonsDisable ? (
-                        <img
-                            style={{ width: "5rem", height: "5rem" }}
-                            src="./public/buttonUnlock.svg"
-                            alt="Unlocked"
-                        />
-                    ) : (
-                        <img
-                            style={{ width: "5rem", height: "5rem" }}
-                            src="./public/buttonLock.svg"
-                            alt="Locked"
-                        />
-                    )}
+                    {isButtonsDisable ? 
+                        <FontAwesomeIcon icon={faLock} style={{color: "#f5f5f5",}} />   
+                         : 
+                        <FontAwesomeIcon icon={faLockOpen} style={{color: "#f5f5f5",}} />
+                    }
                 </button>
             </div>
         </div>
