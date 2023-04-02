@@ -6,6 +6,9 @@ import Timer from "./components/Timer";
 import { useMinuteToSecond } from "./hooks/useSecondToMinute";
 import { Players } from "./components/Players";
 import { Context } from "./Contexts/ContextProvider";
+import ReactGA from "react-ga4"
+
+ReactGA.initialize("G-H976VDHRDE");
 
 function App() {
   const [colorsDeletes, setColorsDeletes] = useState("");
@@ -56,7 +59,14 @@ function App() {
   };
   const handleClickStartGame = () => {
     if (players.length >= 2) {
+      ReactGA.event({
+        action: "start_game",
+        category: "in_game",
+        label: "start_game",
+        value: players.length
+      })
       setIsStartGame(true);
+      
     }
     setErrorNotPlayers(true);
   };
@@ -233,7 +243,7 @@ function App() {
           style={{ width: "100%", height: "4rem", marginBottom: "50px" }}
           onClick={handleClickStartGame}
         >
-          Empezar juego
+          Comenzar juego
         </button>
 
       </div>
