@@ -3,6 +3,8 @@ import { Players } from "./Players";
 import { useSecondsToString } from "../hooks/useSecondToMinute";
 import { styleButtonsTimer } from "../constants/styleButtonsTimer";
 import { motion } from "framer-motion";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faPlay } from "@fortawesome/free-solid-svg-icons";       
 import soundFinishTime11 from "../assets/soundFinishTime1.wav"
 import soundFinishTime12 from "../assets/soundFinishTime2.wav"
 import soundFinishTimeGame1 from "../assets/soundFinishTimeGame1.wav"
@@ -263,11 +265,7 @@ const Timer = ({ initialTime, players, isStartGame }) => {
                             alt="Pause"
                         />
                     ) : (
-                        <img
-                            style={{ width: "5rem", height: "5rem" }}
-                            src="./public/buttonPlay.svg"
-                            alt="Play"
-                        />
+                        <FontAwesomeIcon icon={faPlay} style={{color: "#f5f5f5",}} />
                     )}
                 </button>
                 <button
