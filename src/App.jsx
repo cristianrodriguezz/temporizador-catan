@@ -99,10 +99,11 @@ function App() {
       ]);
       setIsDeleteColor(!isDeleteColor);
       setColor(null);
+      setName('')
     } else {
       setIsFirstInput(false);
     }
-    setName('')
+   
   };
 
   return isStartGame ? (
