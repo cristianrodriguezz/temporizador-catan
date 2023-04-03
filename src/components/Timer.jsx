@@ -6,6 +6,7 @@ import { play } from "../constants/sounds";
 import { motion } from "framer-motion";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPlay , faPause, faClockRotateLeft, faBackwardStep,faLockOpen,faLock} from "@fortawesome/free-solid-svg-icons";     
+import { styleTimerTurn, styleTimerBank } from "../constants/styleTimer";
 
 const Timer = ({ initialTime, players, isStartGame }) => {
     const [timeGame, setTimeGame] = useState(initialTime);
@@ -207,40 +208,12 @@ const Timer = ({ initialTime, players, isStartGame }) => {
                     }}
                 >
                     <span
-                        style={
-                            timeGame > 0
-                                ? {
-                                      fontSize: "7rem",
-                                      fontFamily: "'Inconsolata', monospace",
-                                      fontWeight: 900,
-                                      transition: "font-size 0.15s ease-in-out",
-                                  }
-                                : {
-                                      fontSize: "4rem",
-                                      fontFamily: "'Inconsolata', monospace",
-                                      fontWeight: 900,
-                                      transition: "font-size 1s ease-in-out",
-                                  }
-                        }
+                        style={styleTimerTurn(initialTime, timeGame, bankActualPlayer)}
                     >
                         {timeGameToMinute}
                     </span>
                     <span
-                        style={
-                            timeGame > 0
-                                ? {
-                                      fontSize: "4rem",
-                                      fontFamily: "'Inconsolata', monospace",
-                                      fontWeight: 900,
-                                      transition: "font-size 0.15s ease-in-out",
-                                  }
-                                : {
-                                      fontSize: "7rem",
-                                      fontFamily: "'Inconsolata', monospace",
-                                      fontWeight: 900,
-                                      transition: "font-size 1s ease-in-out",
-                                  }
-                        }
+                        style={styleTimerBank(initialTime, timeGame, bankActualPlayer)}
                     >
                         {timeBankToMinute}
                     </span>
