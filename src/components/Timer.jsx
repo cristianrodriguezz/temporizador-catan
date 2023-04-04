@@ -6,6 +6,7 @@ import { play } from "../constants/sounds";
 import { motion } from "framer-motion";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPlay , faPause, faClockRotateLeft, faBackwardStep,faLockOpen,faLock} from "@fortawesome/free-solid-svg-icons";     
+import { styleTimerTurn, styleTimerBank } from "../constants/styleTimer";
 
 const Timer = ({ initialTime, players, isStartGame }) => {
     const [timeGame, setTimeGame] = useState(initialTime);
@@ -47,15 +48,21 @@ const Timer = ({ initialTime, players, isStartGame }) => {
             if (timeGame > 0) {
                 setTimeGame((prev) => prev - 1);
                 setTimeGameToMinute(useSecondsToString(timeGame - 1));
-                if (timeGame === 1 && bankActualPlayer != 0) 
+                console.log(bankActualPlayer != 0);
+                if (timeGame === 1 && bankActualPlayer != 0)
                   play("soundFinishTimeGame2");
+                  
+                if (bankActualPlayer <= 0 && (timeGame - 1 ) <= 0) {
+                play("soundFinishTime12");
+                hanldeClickNextTurn();
+                }
             } else {
                 setBankActualPlayer((prev) => prev - 1);
-                setTimeBankToMinute(useSecondsToString(bankActualPlayer));
-            }
-            if (bankActualPlayer <= 0 && timeGame <= 0) {
-              play("soundFinishTime12");
-              hanldeClickNextTurn();
+                setTimeBankToMinute(useSecondsToString(bankActualPlayer - 1));
+                if ((bankActualPlayer) <= 0 && timeGame <= 0) {
+                  play("soundFinishTime12");
+                  hanldeClickNextTurn();
+                }
             }
         }, 1000);
 
@@ -207,40 +214,12 @@ const Timer = ({ initialTime, players, isStartGame }) => {
                     }}
                 >
                     <span
-                        style={
-                            timeGame > 0
-                                ? {
-                                      fontSize: "7rem",
-                                      fontFamily: "'Inconsolata', monospace",
-                                      fontWeight: 900,
-                                      transition: "font-size 0.15s ease-in-out",
-                                  }
-                                : {
-                                      fontSize: "4rem",
-                                      fontFamily: "'Inconsolata', monospace",
-                                      fontWeight: 900,
-                                      transition: "font-size 1s ease-in-out",
-                                  }
-                        }
+                        style={styleTimerTurn(initialTime, timeGame, bankActualPlayer)}
                     >
                         {timeGameToMinute}
                     </span>
                     <span
-                        style={
-                            timeGame > 0
-                                ? {
-                                      fontSize: "4rem",
-                                      fontFamily: "'Inconsolata', monospace",
-                                      fontWeight: 900,
-                                      transition: "font-size 0.15s ease-in-out",
-                                  }
-                                : {
-                                      fontSize: "7rem",
-                                      fontFamily: "'Inconsolata', monospace",
-                                      fontWeight: 900,
-                                      transition: "font-size 1s ease-in-out",
-                                  }
-                        }
+                        style={styleTimerBank(initialTime, timeGame, bankActualPlayer)}
                     >
                         {timeBankToMinute}
                     </span>
