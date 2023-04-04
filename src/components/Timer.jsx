@@ -48,15 +48,21 @@ const Timer = ({ initialTime, players, isStartGame }) => {
             if (timeGame > 0) {
                 setTimeGame((prev) => prev - 1);
                 setTimeGameToMinute(useSecondsToString(timeGame - 1));
-                if (timeGame === 1 && bankActualPlayer != 0) 
+                console.log(bankActualPlayer != 0);
+                if (timeGame === 1 && bankActualPlayer != 0)
                   play("soundFinishTimeGame2");
+                  
+                if (bankActualPlayer <= 0 && (timeGame - 1 ) <= 0) {
+                play("soundFinishTime12");
+                hanldeClickNextTurn();
+                }
             } else {
                 setBankActualPlayer((prev) => prev - 1);
-                setTimeBankToMinute(useSecondsToString(bankActualPlayer));
-            }
-            if (bankActualPlayer <= 0 && timeGame <= 0) {
-              play("soundFinishTime12");
-              hanldeClickNextTurn();
+                setTimeBankToMinute(useSecondsToString(bankActualPlayer - 1));
+                if ((bankActualPlayer) <= 0 && timeGame <= 0) {
+                  play("soundFinishTime12");
+                  hanldeClickNextTurn();
+                }
             }
         }, 1000);
 
