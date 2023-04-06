@@ -215,8 +215,8 @@ const Timer = ({ initialTime, players, isStartGame }) => {
                     }}
                 >
                     <div>
-                    { !isRun ?  <div>
-                                    <FontAwesomeIcon class="fa-fade"  icon={faPlay} style={styleTimerPlay(initialTime, timeGame, bankActualPlayer) } />
+                    { !isRun ?  <div style={{opacity: 0.7}}>
+                                    <FontAwesomeIcon icon={faPlay} style={styleTimerPlay(initialTime, timeGame, bankActualPlayer) } />
                                 </div> : null}
                     </div>
                     <span
