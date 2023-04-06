@@ -5,8 +5,8 @@ import { styleButtonsTimer } from "../constants/styleButtonsTimer";
 import { play } from "../constants/sounds";
 import { motion } from "framer-motion";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faPlay , faPause, faClockRotateLeft, faBackwardStep,faLockOpen,faLock} from "@fortawesome/free-solid-svg-icons";     
-import { styleTimerTurn, styleTimerBank, styleTimerPlay } from "../constants/styleTimer";
+import { faPlay , faPause, faClockRotateLeft, faBackwardStep, faLockOpen, faLock, faCircleExclamation, faHouseChimneyWindow, faHouse} from "@fortawesome/free-solid-svg-icons"; 
+import { styleTimerTurn, styleTimerBank, styleTimerPlay, overridePosition} from "../constants/styleTimer";
 
 const Timer = ({ initialTime, players, isStartGame }) => {
     const [timeGame, setTimeGame] = useState(initialTime);
@@ -17,6 +17,7 @@ const Timer = ({ initialTime, players, isStartGame }) => {
 
     const idP = useRef(player.length - 1);
     const [idPlayer, setIdPlayer] = useState(0);
+    const [turnNumber, setTurnNumber] = useState(1);
     const [bankActualPlayer, setBankActualPlayer] = useState(
         player[idPlayer]?.timerBank
     );
@@ -148,6 +149,7 @@ const Timer = ({ initialTime, players, isStartGame }) => {
         if (!isFirstTurn) {
             if (idP.current === idPlayer) {
                 id = 0;
+                setTurnNumber(turnNumber+1);
             } else {
                 id = idPlayer + 1;
             }
@@ -201,11 +203,13 @@ const Timer = ({ initialTime, players, isStartGame }) => {
 
     return (
         <div className="containerStartGame">
+            
             <motion.button
                 whileTap={{ scale: 0.99 }}
                 className="game"
                 onClick={hanldeClickNextTurn}
             >
+                
                 <div
                     className="timer"
                     style={{
@@ -214,9 +218,10 @@ const Timer = ({ initialTime, players, isStartGame }) => {
                         position: "relative",
                     }}
                 >
+                    
                     <div>
                     { !isRun ?  <div style={{opacity: 0.7}}>
-                                    <FontAwesomeIcon icon={faPlay} style={styleTimerPlay(initialTime, timeGame, bankActualPlayer) } />
+                                    <FontAwesomeIcon icon={faPlay} style={styleTimerPlay(initialTime, timeGame, bankActualPlayer) } />   
                                 </div> : null}
                     </div>
                     <span
@@ -226,6 +231,9 @@ const Timer = ({ initialTime, players, isStartGame }) => {
                     </span>
                     <div>
                         <span style={styleTimerBank(initialTime, timeGame, bankActualPlayer)}>{timeBankToMinute}</span>
+                    </div>
+                    <div style={overridePosition(12, 12, 70, 210)}>
+                        {isFirstTurn ? <FontAwesomeIcon icon={faHouseChimneyWindow} /> : turnNumber}
                     </div>
                 </div>
                 <Players

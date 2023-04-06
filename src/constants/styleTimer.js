@@ -38,12 +38,38 @@ export const styleTimerPlay = (initialTime, timeGame, bankActualPlayer) => {
             return { ...text2, color: "#f5f5f5", fontSize: "4.177rem" };
         }
         else {
-            return {...text2, color: "#f5f5f5", fontSize: "7.3535rem" };
+            return { ...text2, color: "#f5f5f5", fontSize: "7.3535rem" };
         }
     }
     else {
         return { ...text2, color: "#f5f5f5", fontSize: "7.3535rem" };
     }
+};
+
+export const styleTimerHouse = () => {
+    return {
+        position: "absolute",
+        top: "50%",
+        left: "50%",
+        width: "12%",
+        height: "12%",
+        transform: "translate(320%, 290%)",
+        zIndex: "1",
+        color: "#f5f5f5",
+    };
+};
+
+export const overridePosition = (traslateX = 0, traslateY = 0, w = 100, h = 100) => {
+    return {
+        position: "absolute",
+        top: "50%",
+        left: "50%",
+        width: `${w}%`,
+        height: `${h}%`,
+        transform: `translate(${traslateX}%, ${traslateY}%)`,
+        zIndex: "1",
+        color: "#f5f5f5",
+    };
 };
 
 const text1 = {
@@ -65,23 +91,17 @@ const text2 = {
     zIndex: "1",
 };
 
+// const house = {
+//     position: "absolute",
+//     top: "50%",
+//     left: "50%",
+//     width: "100%",
+//     height: "100%",
+//     transform: "translate(-50%, -50%)",
+//     zIndex: "1",
+// };
+
 const fontTimer = {
     fontFamily: "'Inconsolata', monospace",
     fontWeight: 900,
 };
-
-// {
-//     timeGame > 0
-//         ? {
-//             fontSize: "4rem",
-//             fontFamily: "'Inconsolata', monospace",
-//             fontWeight: 900,
-//             transition: "font-size 0.15s ease-in-out",
-//         }
-//         : {
-//             fontSize: "7rem",
-//             fontFamily: "'Inconsolata', monospace",
-//             fontWeight: 900,
-//             transition: "font-size 1s ease-in-out",
-//         }
-// }
