@@ -6,7 +6,7 @@ import { play } from "../constants/sounds";
 import { motion } from "framer-motion";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPlay , faPause, faClockRotateLeft, faBackwardStep,faLockOpen,faLock} from "@fortawesome/free-solid-svg-icons";     
-import { styleTimerTurn, styleTimerBank } from "../constants/styleTimer";
+import { styleTimerTurn, styleTimerBank, styleTimerPlay } from "../constants/styleTimer";
 
 const Timer = ({ initialTime, players, isStartGame }) => {
     const [timeGame, setTimeGame] = useState(initialTime);
@@ -210,19 +210,23 @@ const Timer = ({ initialTime, players, isStartGame }) => {
                     className="timer"
                     style={{
                         backgroundColor: player[idPlayer].color,
-                        height: "auto",
+                        height: "11.5rem",
+                        position: "relative",
                     }}
                 >
+                    <div>
+                    { !isRun ?  <div>
+                                    <FontAwesomeIcon class="fa-fade"  icon={faPlay} style={styleTimerPlay(initialTime, timeGame, bankActualPlayer) } />
+                                </div> : null}
+                    </div>
                     <span
                         style={styleTimerTurn(initialTime, timeGame, bankActualPlayer)}
                     >
                         {timeGameToMinute}
                     </span>
-                    <span
-                        style={styleTimerBank(initialTime, timeGame, bankActualPlayer)}
-                    >
-                        {timeBankToMinute}
-                    </span>
+                    <div>
+                        <span style={styleTimerBank(initialTime, timeGame, bankActualPlayer)}>{timeBankToMinute}</span>
+                    </div>
                 </div>
                 <Players
                     players={player}
