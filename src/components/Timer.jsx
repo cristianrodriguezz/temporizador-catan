@@ -234,7 +234,7 @@ const Timer = ({ initialTime, players, isStartGame }) => {
                     <div>
                         <span style={styleTimerBank(initialTime, timeGame, bankActualPlayer)}>{timeBankToMinute}</span>
                     </div>
-                    <div style={overridePosition(12, 12, 70, 210)}>
+                    <div style={overridePosition(375, 270, 10, 10)}>
                         {isFirstTurn ? <FontAwesomeIcon icon={faHouseChimneyWindow} /> : turnNumber}
                     </div>
                 </div>
