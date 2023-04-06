@@ -167,6 +167,7 @@ const Timer = ({ initialTime, players, isStartGame }) => {
                     if (id === -1) {
                         id = 0;
                         setIsFirstTurn(false);
+                        setTurnNumber(1);
                     }
                 } else {
                     id = idPlayer + 1;
