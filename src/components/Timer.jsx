@@ -49,7 +49,6 @@ const Timer = ({ initialTime, players, isStartGame }) => {
             if (timeGame > 0) {
                 setTimeGame((prev) => prev - 1);
                 setTimeGameToMinute(useSecondsToString(timeGame - 1));
-                console.log(bankActualPlayer != 0);
                 if (timeGame === 1 && bankActualPlayer != 0)
                   play("soundFinishTimeGame2");
                   
@@ -98,6 +97,9 @@ const Timer = ({ initialTime, players, isStartGame }) => {
         setTimeGame(passedTurnTime);
         setTimeGameToMinute(useSecondsToString(passedTurnTime));
         setIsComebackDisable(true);
+        if (idPlayer === 0) {
+            setTurnNumber(turnNumber-1);
+        }
     };
 
     const handleClickButtonsDisable = () => {
