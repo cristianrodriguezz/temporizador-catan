@@ -6,7 +6,7 @@ import Timer from "./components/Timer";
 import { useMinuteToSecond } from "./hooks/useSecondToMinute";
 import { Players } from "./components/Players";
 import { Context } from "./Contexts/ContextProvider";
-import ReactGA from "react-ga4"
+import ReactGA from "react-ga4";
 
 ReactGA.initialize("G-H976VDHRDE");
 
@@ -22,8 +22,8 @@ function App() {
   const [isFirstInput, setIsFirstInput] = useState(true);
   const [errorSelectColor, setErrorSelectColor] = useState();
   const [errorNotPlayers, setErrorNotPlayers] = useState(false);
-  const [name, setName] = useState('');
-
+  const [name, setName] = useState("");
+  
   const minute = useRef();
   const second = useRef();
 
@@ -63,10 +63,9 @@ function App() {
         action: "start_game",
         category: "in_game",
         label: "start_game",
-        value: players.length
-      })
+        value: players.length,
+      });
       setIsStartGame(true);
-      
     }
     setErrorNotPlayers(true);
   };
@@ -79,10 +78,10 @@ function App() {
     setMinutesGame(min);
   };
   const handleChangeName = (e) => {
-    const name = e.target.value
-    
-    setName(name)
-  }
+    const name = e.target.value;
+
+    setName(name);
+  };
   useEffect(() => {
     setTime(useMinuteToSecond(minutesGame, secondsGame));
   }, [minutesGame, secondsGame, players]);
@@ -95,25 +94,22 @@ function App() {
     const seconds =
       second.current.value === "" ? 0 : parseInt(second.current.value);
     const timeBank = useMinuteToSecond(minutes, seconds);
-
+    let player = {
+      id: id.current,
+      name,
+      color: color,
+      timerBank: timeBank,
+      isActive: false,
+    };
     if (!isFirstInput && color !== null && !errorSelectColor) {
-      setPlayers([
-        ...players,
-        {
-          id: id.current,
-          name,
-          color: color,
-          timerBank: timeBank,
-          isActive: false,
-        },
-      ]);
+      setPlayers([...players, player]);
       setIsDeleteColor(!isDeleteColor);
       setColor(null);
-      setName('')
+      setName("");
     } else {
       setIsFirstInput(false);
     }
-   
+
   };
 
   return isStartGame ? (
@@ -183,6 +179,8 @@ function App() {
                   color={handleChangeColor}
                   isDeleteColor={isDeleteColor}
                   colorsDeletes={colorsDeletes}
+                  players={players}
+                  isStartGame={isStartGame}
                 />
 
                 <input
@@ -236,15 +234,14 @@ function App() {
               players={players}
               errorNotPlayers={errorNotPlayers}
               setPlayers={setPlayers}
-              
             />
           </div>
           <button
-          style={{ width: "100%", height: "4rem", marginBottom: "50px" }}
-          onClick={handleClickStartGame}
-        >
-          Comenzar juego
-        </button>
+            style={{ width: "100%", height: "4rem", marginBottom: "50px" }}
+            onClick={handleClickStartGame}
+          >
+            Comenzar juego
+          </button>
         </div>
       </div>
     </Context.Provider>

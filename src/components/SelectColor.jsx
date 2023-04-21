@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useRef, useState } from "react";
 import { Context } from "../Contexts/ContextProvider";
 import { colors } from "../constants/color";
 
-const SelectColor = ({ color, isDeleteColor }) => {
+const SelectColor = ({ color, isDeleteColor, players, isStartGame }) => {
   const [options, setOptions] = useState(colors);
   const [optionSelected, setOptionSelected] = useState();
   const colorInput = useRef();
@@ -27,8 +27,18 @@ const SelectColor = ({ color, isDeleteColor }) => {
 
     }
     setColorsDeletes(false)
+
   
-  }, [colorsDeletes])
+  }, [colorsDeletes, players, isStartGame])
+
+  useEffect(() => {
+    if (!isStartGame) {
+      const colorUsedForPlayers = players.map(index => index.color)
+      const colorUsed = options.filter(color => !colorUsedForPlayers.includes(color.value))
+      setOptions(colorUsed)
+    }
+  }, [isStartGame])
+  
   
 
   const handleSelectChange = (e) => {
