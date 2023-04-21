@@ -17,7 +17,7 @@ const PlayersList = ({
 }) => {
   const [renderPlayerToDelete, setRenderPlayerToDelete] = useState(true);
   const { setColorsDeletes } = useContext(Context);
-
+  console.log(players);
   const handleDragEnd = (result) => {
     if (!result.destination) return;
     const newItems = [...players];

@@ -236,16 +236,16 @@ function App() {
               players={players}
               errorNotPlayers={errorNotPlayers}
               setPlayers={setPlayers}
+              
             />
           </div>
-        </div>
-        <button
+          <button
           style={{ width: "100%", height: "4rem", marginBottom: "50px" }}
           onClick={handleClickStartGame}
         >
           Comenzar juego
         </button>
-
+        </div>
       </div>
     </Context.Provider>
   );

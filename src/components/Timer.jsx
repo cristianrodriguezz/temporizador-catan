@@ -8,7 +8,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPlay , faPause, faClockRotateLeft, faBackwardStep, faLockOpen, faLock, faCircleExclamation, faHouseChimneyWindow, faHouse} from "@fortawesome/free-solid-svg-icons"; 
 import { styleTimerTurn, styleTimerBank, styleTimerPlay, overridePosition} from "../constants/styleTimer";
 
-const Timer = ({ initialTime, players, isStartGame }) => {
+const Timer = ({ initialTime, players, isStartGame, setIsStartGame }) => {
     const [timeGame, setTimeGame] = useState(initialTime);
     const [player, setPlayer] = useState(players);
     const [isRun, setIsRun] = useState(false);
@@ -280,6 +280,7 @@ const Timer = ({ initialTime, players, isStartGame }) => {
                         <FontAwesomeIcon icon={faLockOpen} style={{color: "#f5f5f5",}} />
                     }
                 </button>
+                <button style={{padding:'3.59px'}} onClick={()=> setIsStartGame(!confirm("¿Desea volver atrás?. Perderá todos los tiempos"))}>Back</button>
             </div>
         </div>
     );
