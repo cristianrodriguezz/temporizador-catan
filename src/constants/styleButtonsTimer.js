@@ -3,7 +3,7 @@ export const styleButtonsTimer = (isButtonsDisable) => {
 };
 
 const buttonStyle = {
-  width: '3rem',
+  width: '3.4rem',
   height: '3rem',
   display: 'flex',
   justifyContent: 'center',
