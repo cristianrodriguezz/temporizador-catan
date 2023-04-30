@@ -223,7 +223,8 @@ const Timer = ({ initialTime, players, isStartGame, setIsStartGame }) => {
   };
 
   return (
-    <div className="containerStartGame">
+    <div className="containerStartGame" ref={ref} style={{backgroundColor:'#000000'}}>
+      
       <motion.button
         whileTap={{ scale: 0.99 }}
         className="game"
