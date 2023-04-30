@@ -5,6 +5,7 @@ import { styleButtonsTimer } from "../constants/styleButtonsTimer";
 import { play } from "../constants/sounds";
 import { motion } from "framer-motion";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { useFullscreen, useToggle } from "react-use";
 import {
   faPlay,
   faPause,
@@ -15,6 +16,8 @@ import {
   faCircleExclamation,
   faHouseChimneyWindow,
   faHouse,
+  faMaximize,
+  faMinimize
 } from "@fortawesome/free-solid-svg-icons";
 import {
   styleTimerTurn,
@@ -23,17 +26,25 @@ import {
   overridePosition,
 } from "../constants/styleTimer";
 
+
 const Timer = ({ initialTime, players, isStartGame, setIsStartGame }) => {
   const [timeGame, setTimeGame] = useState(initialTime);
   const [timeGameToMinute, setTimeGameToMinute] = useState(
     useSecondsToString(timeGame)
   );
+  const ref = useRef(null);
+  const [show, toggle] = useToggle(false);
+  const isFullscreen = useFullscreen(ref, show, {
+    onClose: () => toggle(false),
+  });
   const [player, setPlayer] = useState(players);
   const [isRun, setIsRun] = useState(false);
   const [isFirstTurn, setIsFirstTurn] = useState(true);
   const [isComeback, setIsComeback] = useState(false);
-  const [totalTimeGame, setTotalTimeGame] = useState(0)
-  const [totalTimeGameToMinute, setTotalTimeGameToMinute] = useState(useSecondsToString(totalTimeGame))
+  const [totalTimeGame, setTotalTimeGame] = useState(0);
+  const [totalTimeGameToMinute, setTotalTimeGameToMinute] = useState(
+    useSecondsToString(totalTimeGame)
+  );
   const idP = useRef(player.length - 1);
   const [idPlayer, setIdPlayer] = useState(0);
   const [turnNumber, setTurnNumber] = useState(1);
@@ -43,7 +54,7 @@ const Timer = ({ initialTime, players, isStartGame, setIsStartGame }) => {
   const [timeBankToMinute, setTimeBankToMinute] = useState(
     useSecondsToString(bankActualPlayer)
   );
-  
+
   const [passedTurnTime, setPassedTurnTime] = useState(initialTime);
   const [passedTurnIdPlayer, setPassedTurnIdPlayer] = useState(idPlayer);
   const [isComebackDisable, setIsComebackDisable] = useState(true);
@@ -59,7 +70,6 @@ const Timer = ({ initialTime, players, isStartGame, setIsStartGame }) => {
     let interval = null;
 
     interval = setInterval(() => {
-
       if (!isRun) {
         return;
       }
@@ -82,7 +92,7 @@ const Timer = ({ initialTime, players, isStartGame, setIsStartGame }) => {
         }
       }
       setTotalTimeGame((prev) => prev + 1);
-      setTotalTimeGameToMinute(useSecondsToString(totalTimeGame + 1))
+      setTotalTimeGameToMinute(useSecondsToString(totalTimeGame + 1));
     }, 1000);
 
     return () => clearInterval(interval);
@@ -269,8 +279,14 @@ const Timer = ({ initialTime, players, isStartGame, setIsStartGame }) => {
               turnNumber
             )}
           </div>
-          <div style={{ ...overridePosition(-470, 300, 10, 10), fontSize: '25px', color:'#f5f5f566' }}>
-              {totalTimeGameToMinute}
+          <div
+            style={{
+              ...overridePosition(-470, 300, 10, 10),
+              fontSize: "25px",
+              color: "#f5f5f566",
+            }}
+          >
+            {totalTimeGameToMinute}
           </div>
         </div>
         <Players
@@ -316,6 +332,7 @@ const Timer = ({ initialTime, players, isStartGame, setIsStartGame }) => {
         >
           Set
         </button>
+        <button onClick={() => toggle()}>{!isFullscreen ? <FontAwesomeIcon style={styleButtonsTimer()} icon={faMaximize} /> : <FontAwesomeIcon icon={faMinimize} style={styleButtonsTimer()}/> }</button>
         <button onClick={handleClickButtonsDisable} style={styleButtonsTimer()}>
           {isButtonsDisable ? (
             <FontAwesomeIcon icon={faLock} style={{ color: "#f5f5f5" }} />
