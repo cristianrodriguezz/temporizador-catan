@@ -7,6 +7,7 @@ import { useMinuteToSecond } from "./hooks/useSecondToMinute";
 import { Players } from "./components/Players";
 import { Context } from "./Contexts/ContextProvider";
 import ReactGA from "react-ga4";
+import FullScreen from "./components/FullScreen";
 
 ReactGA.initialize("G-H976VDHRDE");
 
