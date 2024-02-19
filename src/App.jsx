@@ -134,7 +134,8 @@ function App() {
       }}
     >
       <div className="App">
-        <div>
+      <div>
+
           <h1>Temporizador</h1>
           <form className="containerTimeGame">
             <h2>Tiempo por turno: </h2>
@@ -237,11 +238,12 @@ function App() {
             />
           </div>
           <button
-            style={{ width: "100%", height: "4rem", marginBottom: "50px" }}
+            style={{ width: "100%", height: "4rem", marginBottom: "10px" }}
             onClick={handleClickStartGame}
           >
             Comenzar juego
           </button>
+
         </div>
       </div>
     </Context.Provider>
