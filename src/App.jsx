@@ -30,7 +30,21 @@ function App() {
   const minute = useRef()
   const second = useRef()
 
-  let id = useRef(-1)
+  let id = useRef(-1);
+
+  useEffect(() => {
+    players.forEach(function (player, index) {
+      player.id = index;
+    });
+
+    if (isFirstInput) {
+      setIsFirstInput(color === null);
+
+      return;
+    }
+
+   
+  }, [color, isFirstInput, players]);
 
   const handleChangeColor = (color) => {
     setColor(color)
