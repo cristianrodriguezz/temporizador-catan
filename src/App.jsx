@@ -8,6 +8,9 @@ import { Players } from "./components/Players";
 import { Context } from "./Contexts/ContextProvider";
 import ReactGA from "react-ga4";
 import GitHub from "./components/icons/GitHub";
+import { useShowHelper } from "./hooks/useShowHelper";
+import Helper from "./components/Helper";
+import Info from "./components/icons/Info";
 
 ReactGA.initialize("G-H976VDHRDE");
 
@@ -25,6 +28,7 @@ function App() {
   const [errorSelectColor, setErrorSelectColor] = useState();
   const [errorNotPlayers, setErrorNotPlayers] = useState(false);
   const [name, setName] = useState("");
+  const { showDropDown, handleOpen } = useShowHelper()
 
   
   const minute = useRef()
@@ -149,7 +153,7 @@ function App() {
           </div>
         </div>
           <form className="containerTimeGame">
-            <h2>Tiempo por turno: </h2>
+            <h2>Tiempo de turno: </h2>
             <div className="containerMinutesGame">
               <label htmlFor="minutesGame" className="minutesGame">
                 <input
@@ -215,7 +219,17 @@ function App() {
                 </p>
               ) : null}
               <div className="containerMinutesGame">
-                <h2>Banco de tiempo:</h2>
+                <div style={{display:'flex', alignItems:'center', justifyContent:'center'}}>
+        
+                  <h2 style={{width:'100%'}}>Banco de tiempo:</h2>
+                  <div style={{position:'relative'}}>
+                    <Info onClick={handleOpen}/>
+                    {
+                      showDropDown && <Helper/>
+                    }
+                  </div>
+                </div>
+                <div>
                 <label htmlFor="minutes">
                   <input
                     placeholder="0"
@@ -239,6 +253,7 @@ function App() {
                     max="59"
                   ></input>
                 </label>
+                </div>
               </div>
               <button style={{ width: "100%", height: "4rem" }}>+</button>
             </form>
@@ -271,6 +286,7 @@ function App() {
           >
             Comenzar juego :)
           </button>
+          
 
         </div>
       </div>

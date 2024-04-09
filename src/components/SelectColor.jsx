@@ -53,7 +53,7 @@ const SelectColor = ({ color, isDeleteColor, players, isStartGame }) => {
       ref={colorInput}
       onChange={handleSelectChange}
     >
-      <option value={"DEFAULT"}>Select color</option>
+      <option value={"DEFAULT"}>Color</option>
       {options.map((option) => (
         <option
           style={{ backgroundColor: option.value }}

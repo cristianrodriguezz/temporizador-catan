@@ -22,6 +22,7 @@ select{
 .containerMinutesGame{
   display: flex;
   align-items: center;
+  justify-content: space-between;
 }
 .containerAddPlayer{
   display: flex;
@@ -244,4 +245,16 @@ body {
   -ms-user-select: none; /* IE10+/Edge */
   user-select: none;
 }
+.helper{
+  background-color: rgb(97, 97, 97);
+  width: 150px;
+  height: auto;
+  position: absolute;
+  padding: 0.2rem;
+  font-size: 0.95rem;
+  border-radius: 0.5rem;
+  top: 10px;
+  left: 27px;
+}
+
 
