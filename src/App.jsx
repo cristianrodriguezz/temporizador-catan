@@ -257,7 +257,7 @@ function App() {
             <label htmlFor="check-23">
               ¿Es catan?
             </label>
-            <input type="checkbox" id="check-23" />
+            <input onChange={(e) => setIsFirstInput(e.target.checked)} type="checkbox" id="check-23" />
             <label className="input"  htmlFor="check-23" >
               <svg viewBox="0,0,50,50">
                 <path d="M5 30 L 20 45 L 45 5"></path>
