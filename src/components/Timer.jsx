@@ -33,7 +33,7 @@ const Timer = ({ initialTime, players, isStartGame, setIsStartGame, isFirstTurn,
   const [timeGameToMinute, setTimeGameToMinute] = useState(
     useSecondsToString(timeGame)
   );
-  console.log(initialTime);
+  console.log(isFirstTurn);
   const ref = useRef(null);
   const [show, setToggle] = useState(false);
   const [player, setPlayer] = useState(players);

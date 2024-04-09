@@ -27,39 +27,21 @@ function App() {
   const [name, setName] = useState("");
 
   
-  const minute = useRef();
-  const second = useRef();
+  const minute = useRef()
+  const second = useRef()
 
-  let id = useRef(-1);
-
-  useEffect(() => {
-    players.forEach(function (player, index) {
-      player.id = index;
-    });
-
-    if (isFirstInput) {
-      setIsFirstInput(color === null);
-
-      return;
-    }
-
-    if (players.length === 6) {
-      setErrorSelectColor("");
-      return;
-    }
-    if (color === null) {
-      setErrorSelectColor("Elija un color");
-    } else {
-      setErrorSelectColor("");
-    }
-    setTimeout(() => {
-      setErrorSelectColor("");
-    }, 3000);
-  }, [color, isFirstInput, players]);
+  let id = useRef(-1)
 
   const handleChangeColor = (color) => {
-    setColor(color);
-  };
+    setColor(color)
+  }
+
+  const handleChangeIsCatan = (e) => {
+    const check = e.target.checked
+    setIsFirstTurn(check)
+  }
+
+
   const handleClickStartGame = () => {
     if (players.length >= 2) {
       ReactGA.event({
@@ -114,11 +96,10 @@ function App() {
     }
 
   };
+
+
   
-  const handleChangeFirstTurn = (e) => {
-    setIsFirstTurn(e.target.checked)
-    console.log(e.target.checked)
-  }
+
 
   return isStartGame ? (
     <Context.Provider
@@ -148,7 +129,7 @@ function App() {
         <div className="title">
           <h1>Temporizador</h1>
           <div className="github">
-            <a href="" target="_blank">
+            <a href="https://github.com/cristianrodriguezz" target="_blank">
               <GitHub/>
             </a>
           </div>
@@ -257,7 +238,11 @@ function App() {
             <label htmlFor="check-23">
               ¿Es catan?
             </label>
-            <input onChange={(e) => setIsFirstInput(e.target.checked)} type="checkbox" id="check-23" />
+            <input 
+              onChange={handleChangeIsCatan}
+              type="checkbox" 
+              id="check-23" 
+            />
             <label className="input"  htmlFor="check-23" >
               <svg viewBox="0,0,50,50">
                 <path d="M5 30 L 20 45 L 45 5"></path>
