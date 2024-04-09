@@ -270,7 +270,7 @@ function App() {
             style={{ width: "100%", height: "4rem", marginBottom: "10px" }}
             onClick={handleClickStartGame}
           >
-            Comenzar juego
+            Comenzar juego :)
           </button>
 
         </div>
