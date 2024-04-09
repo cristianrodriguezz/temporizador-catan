@@ -7,6 +7,7 @@ import { useMinuteToSecond } from "./hooks/useSecondToMinute";
 import { Players } from "./components/Players";
 import { Context } from "./Contexts/ContextProvider";
 import ReactGA from "react-ga4";
+import GitHub from "./components/icons/GitHub";
 
 ReactGA.initialize("G-H976VDHRDE");
 
@@ -20,9 +21,11 @@ function App() {
   const [secondsGame, setSecondsGame] = useState(0);
   const [isDeleteColor, setIsDeleteColor] = useState(false);
   const [isFirstInput, setIsFirstInput] = useState(true);
+  const [isFirstTurn, setIsFirstTurn] = useState(false);
   const [errorSelectColor, setErrorSelectColor] = useState();
   const [errorNotPlayers, setErrorNotPlayers] = useState(false);
   const [name, setName] = useState("");
+
   
   const minute = useRef();
   const second = useRef();
@@ -111,6 +114,11 @@ function App() {
     }
 
   };
+  
+  const handleChangeFirstTurn = (e) => {
+    setIsFirstTurn(e.target.checked)
+    console.log(e.target.checked)
+  }
 
   return isStartGame ? (
     <Context.Provider
@@ -124,6 +132,8 @@ function App() {
         players={players}
         isStartGame={isStartGame}
         setIsStartGame={setIsStartGame}
+        isFirstTurn={isFirstTurn}
+        setIsFirstTurn={setIsFirstTurn}
       />
     </Context.Provider>
   ) : (
@@ -135,8 +145,14 @@ function App() {
     >
       <div className="App">
       <div>
-
+        <div className="title">
           <h1>Temporizador</h1>
+          <div className="github">
+            <a href="" target="_blank">
+              <GitHub/>
+            </a>
+          </div>
+        </div>
           <form className="containerTimeGame">
             <h2>Tiempo por turno: </h2>
             <div className="containerMinutesGame">
@@ -237,6 +253,19 @@ function App() {
               setPlayers={setPlayers}
             />
           </div>
+          <div className="checkbox-wrapper-23">
+            <label htmlFor="check-23">
+              ¿Es catan?
+            </label>
+            <input type="checkbox" id="check-23" />
+            <label className="input"  htmlFor="check-23" >
+              <svg viewBox="0,0,50,50">
+                <path d="M5 30 L 20 45 L 45 5"></path>
+              </svg>
+            </label>
+          </div>
+
+
           <button
             style={{ width: "100%", height: "4rem", marginBottom: "10px" }}
             onClick={handleClickStartGame}

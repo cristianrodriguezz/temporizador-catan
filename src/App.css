@@ -172,3 +172,69 @@ input#name{
     max-width: 794px;
   }
 }
+
+.checkbox-wrapper-23 *,
+  .checkbox-wrapper-23 *:after,
+  .checkbox-wrapper-23 *:before {
+  box-sizing: border-box;
+}
+
+.checkbox-wrapper-23 input {
+  position: absolute;
+  opacity: 0;
+}
+
+.checkbox-wrapper-23 input:checked + label svg path {
+  stroke-dashoffset: 0;
+}
+.checkbox-wrapper-23{
+  display: flex;
+  gap: 1rem;
+  justify-content: end;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.checkbox-wrapper-23 input:focus + label {
+  transform: scale(1.03);
+}
+
+.checkbox-wrapper-23 input + label {
+  display: block;
+  border: 2px solid rgb(253, 237, 237);
+  width: 1.5rem;
+  height: 1.5rem;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all .2s ease;
+}
+
+.checkbox-wrapper-23 input + label:active {
+  transform: scale(1.05);
+  border-radius: 12px;
+}
+
+.checkbox-wrapper-23 input + label svg {
+  pointer-events: none;
+  padding: 5%;
+}
+
+.checkbox-wrapper-23 input + label svg path {
+  fill: none;
+  stroke: rgb(247, 247, 247);
+  stroke-width: 4px;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-dasharray: 100;
+  stroke-dashoffset: 101;
+  transition: all 250ms cubic-bezier(1,0,.37,.91);
+}
+.github{
+  width: 35px;
+
+}
+.title{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}

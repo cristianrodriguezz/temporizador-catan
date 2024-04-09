@@ -28,7 +28,7 @@ import {
 
 
 
-const Timer = ({ initialTime, players, isStartGame, setIsStartGame }) => {
+const Timer = ({ initialTime, players, isStartGame, setIsStartGame, isFirstTurn, setIsFirstTurn }) => {
   const [timeGame, setTimeGame] = useState(initialTime);
   const [timeGameToMinute, setTimeGameToMinute] = useState(
     useSecondsToString(timeGame)
@@ -38,7 +38,6 @@ const Timer = ({ initialTime, players, isStartGame, setIsStartGame }) => {
   const [show, setToggle] = useState(false);
   const [player, setPlayer] = useState(players);
   const [isRun, setIsRun] = useState(false);
-  const [isFirstTurn, setIsFirstTurn] = useState(true);
   const [isComeback, setIsComeback] = useState(false);
   const [totalTimeGame, setTotalTimeGame] = useState(0);
   const [totalTimeGameToMinute, setTotalTimeGameToMinute] = useState(
@@ -49,10 +48,11 @@ const Timer = ({ initialTime, players, isStartGame, setIsStartGame }) => {
   const [turnNumber, setTurnNumber] = useState(1);
   const [bankActualPlayer, setBankActualPlayer] = useState(
     player[idPlayer]?.timerBank
-  );
+  )
   const [timeBankToMinute, setTimeBankToMinute] = useState(
     useSecondsToString(bankActualPlayer)
-  );
+  )
+
 
   const [passedTurnTime, setPassedTurnTime] = useState(initialTime);
   const [passedTurnIdPlayer, setPassedTurnIdPlayer] = useState(idPlayer);
@@ -81,9 +81,8 @@ const Timer = ({ initialTime, players, isStartGame, setIsStartGame }) => {
 
 
     interval = setInterval(() => {
-      if (!isRun) {
-        return;
-      }
+      if (!isRun) return
+
       if (timeGame > 0) {
         setTimeGame((prev) => prev - 1);
         setTimeGameToMinute(useSecondsToString(timeGame - 1));
