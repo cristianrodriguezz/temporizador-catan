@@ -258,3 +258,16 @@ body {
 }
 
 
+@keyframes open {
+  from {
+    transform: scale(0,0);
+  }
+  to {
+    transform: scale(1,1);
+  }
+}
+.animate-open {
+  animation: open 0.15s ease-in-out;
+  z-index: 100;
+  transform-origin: top left;
+}
