@@ -5,12 +5,29 @@ import soundFinishTimeGame2Src from "../assets/soundFinishTimeGame2.wav";
 import soundPassTurn2Src from "../assets/soundPassTurn2.wav";
 import soundGeneralClickSrc from "../assets/soundGeneralClick.wav";
 
-const soundFinishTime11 = new Audio(soundFinishTime11Src);
-const soundFinishTime12 = new Audio(soundFinishTime12Src);
-const soundFinishTimeGame1 = new Audio(soundFinishTimeGame1Src);
-const soundFinishTimeGame2 = new Audio(soundFinishTimeGame2Src);
-const soundPassTurn2 = new Audio(soundPassTurn2Src);
-const soundGeneralClick = new Audio(soundGeneralClickSrc);
+const soundFinishTime11 = new Audio();
+soundFinishTime11.src = soundFinishTime11Src;
+soundFinishTime11.preload = "auto";
+
+const soundFinishTime12 = new Audio();
+soundFinishTime12.src = soundFinishTime12Src;
+soundFinishTime12.preload = "auto";
+
+const soundFinishTimeGame1 = new Audio();
+soundFinishTimeGame1.src = soundFinishTimeGame1Src;
+soundFinishTimeGame1.preload = "auto";
+
+const soundFinishTimeGame2 = new Audio();
+soundFinishTimeGame2.src = soundFinishTimeGame2Src;
+soundFinishTimeGame2.preload = "auto";
+
+const soundPassTurn2 = new Audio();
+soundPassTurn2.src = soundPassTurn2Src;
+soundPassTurn2.preload = "auto";
+
+const soundGeneralClick = new Audio();
+soundGeneralClick.src = soundGeneralClickSrc;
+soundGeneralClick.preload = "auto";
 
 export const play = (sound) => {
   if (sound === "soundFinishTime11") {
